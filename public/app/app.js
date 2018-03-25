@@ -31,6 +31,19 @@ app.config(function ($routeProvider, $provide, toastrConfig) {
 				templateUrl: '/partials/users/edit.html'
 			})
 
+		.when('/groups',{
+				controller: 'GroupsController',
+				templateUrl: '/partials/groups/index.html'
+			})
+		.when('/groups-new',{
+				controller: 'GroupsController',
+				templateUrl: '/partials/groups/edit.html'
+			})
+		.when('/groups-edit/:id',{
+				controller: 'GroupsController',
+				templateUrl: '/partials/groups/edit.html'
+			})
+
 		/*.when('/windows',{
 				controller: 'WindowsController',
 				templateUrl: '/partials/windows/index.html'

@@ -27,4 +27,8 @@ Route::group(['middleware' => ['admin']], function () {
 	Route::resource('users', 'UsersController');
 	Route::post('users/{id}/activate', 'UsersController@activate');
 	Route::post('users/{id}/deactivate', 'UsersController@deactivate');
+
+	Route::resource('groups', 'GroupsController');
+	Route::post('groups/{id}/activate', 'GroupsController@activate');
+	Route::post('groups/{id}/deactivate', 'GroupsController@deactivate');
 });

@@ -22,19 +22,15 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li><a href="#/users">Usuarios</a></li>
-                    <!--<li><a href="#/members">Inventarios</a></li>
+                    <!--<li><a href="#/members">Inventarios</a></li>-->
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             Catálogos <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="#/windows">Ventanillas</a></li>
-                            <li><a href="#/components">Componentes</a></li>
-                            <li><a href="#/sectors">Sectores</a></li>
-                            <li><a href="#/activities">Actividades</a></li>
-                            <li><a href="#/requirements">Requisitos</a></li>
+                            <li><a href="#/groups">Grupos</a></li>
                         </ul>
-                    </li>-->
+                    </li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->

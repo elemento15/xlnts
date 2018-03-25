@@ -51,5 +51,6 @@
     <script src="/app/controllers/base_controller.js"></script>
     <script src="/app/controllers/home_controller.js"></script>
     <script src="/app/controllers/users_controller.js"></script>
+    <script src="/app/controllers/groups_controller.js"></script>
 </body>
 </html>

@@ -28,3 +28,26 @@ app.factory('RoleService', ['$http', function($http) {
 		}
 	} 
 }]);
+
+app.factory('GroupService', ['$http', function($http) {
+	return {
+		get      : function (data) {
+			return $http.get('groups/'+ data.id);
+		},
+		save     : function (data) {
+			return (data.id) ? $http.patch('groups/'+ data.id, data) : $http.post('groups', data);
+		},
+		read     : function(data) {
+			return $http.get('groups?'+ jQuery.param(data), data);
+		},
+		delete   : function(data) {
+			return $http.delete('groups/'+ data.id);
+		},
+		activate : function(data) {
+			return $http.post('groups/'+ data.id +'/activate');
+		},
+		deactivate : function(data) {
+			return $http.post('groups/'+ data.id +'/deactivate');
+		}
+	} 
+}]);
