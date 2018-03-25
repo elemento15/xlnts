@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container" style="margin-top: 50px;">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-xs-10 col-sm-8 col-xs-offset-1 col-sm-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">Registro</div>
 
@@ -66,6 +66,10 @@
                                 <button type="submit" class="btn btn-primary">
                                     Registrar
                                 </button>
+
+                                <a class="btn btn-link pull-right" href="{{ route('home') }}">
+                                    Ingreso
+                                </a>
                             </div>
                         </div>
                     </form>

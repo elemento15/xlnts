@@ -1,0 +1,197 @@
+body {
+	background-color: #e7e7f9;
+}
+
+.navbar {
+	margin-bottom: 5px;
+	background-color: #d0d3f1;
+}
+
+.cls-main-container {
+	margin-top: 5px;
+}
+
+.cls-toolbar {
+	padding: 5px 0px;
+}
+
+.cls-toolbar-gray {
+	background-color: #dedeff;
+	padding: 5px 0px;
+}
+
+textarea {
+	resize: none;
+}
+
+h3.cls-title {
+	color: #5D88C3;
+	margin: 10px 0px;
+	padding-bottom: 5px;
+	border-bottom: 1px solid #5D88C3;
+	font-size: 20px;
+}
+
+h5.cls-title {
+	color: #5D88C3;
+	margin: 10px 0px;
+	padding-bottom: 5px;
+	border-bottom: 1px solid #5D88C3;
+	font-size: 16px;
+}
+
+table.cls-table,
+table.cls-table-sm {
+	margin-bottom: 5px;
+}
+
+table.cls-table, 
+table.cls-table-sm, 
+form {
+	font-size: 13px;
+}
+
+table.cls-table thead tr,
+table.cls-table-sm thead tr {
+	background-color: #d0d3f1;
+}
+
+table.cls-table tbody,
+table.cls-table-sm tbody {
+	background-color: #fff;
+}
+
+table.cls-table tbody td {
+	line-height: 16px;
+	height: 33px;
+}
+
+table.cls-table-sm tbody td {
+	line-height: 14px;
+}
+
+table.cls-table tbody tr:hover,
+table.cls-table-sm tbody tr:hover {
+	background-color: #e6e6e6;
+}
+
+table.cls-table tr td .cls-actions,
+table.cls-table-sm tr td .cls-actions {
+	display: none;
+}
+
+table.cls-table tr:hover td .cls-actions,
+table.cls-table-sm tr:hover td .cls-actions {
+	padding: 0px;
+	display: block;
+}
+
+table td .cls-small {
+	font-size: 12px;
+	line-height: 16px;
+	color: #666;
+	margin-top: 3px;
+}
+
+table td .cls-xsmall {
+	font-size: 11px;
+	line-height: 11px;
+	color: #666;
+	margin-top: 2px;
+}
+
+table td .cls-small-collapsed {
+	line-height: 16px;
+	height: 16px;
+	overflow: hidden;
+}
+
+nav.cls-pagination {
+	text-align: right;
+}
+
+ul.pagination {
+	cursor: pointer;
+	margin: 5px 0px;
+}
+
+ul.pagination li span,
+ul.pagination li span:hover {
+	color: #333;
+	border-color: #a9a9a9;
+}
+
+.cls-pointer {
+	cursor: pointer;
+}
+
+.cls-small {
+	font-size: 12px;
+}
+
+.cls-xsmall {
+	font-size: 11px;
+}
+
+.cls-form-detail {
+	margin: 6px 0px;
+}
+
+.cls-form-detail input {
+	font-size: 13px;
+	padding: 5px;
+	height: 28px;
+}
+
+.cls-filters {
+	padding: 10px 5px 5px 5px;
+	margin-bottom: 5px;
+	background-color: #e2e2e2;
+	border-radius: 5px;
+	font-size: 12px;
+}
+
+.cls-filters .row {
+	margin-bottom: 5px;
+}
+
+.cls-nav-tabs {
+
+}
+
+.cls-nav-tabs li a {
+	padding: 5px 10px;
+}
+
+.cls-tab-contents {
+	padding: 10px;
+	border: 1px solid #ddd; 
+	border-top: 0px;
+}
+
+.cls-form-text {
+	color: #3841a7;
+	font-size: 14px;
+}
+
+.cls-selected {
+	background-color: #fff7c0;
+}
+
+.cls-list-requirements {
+	background-color: #fff;
+}
+
+.cls-project-amount {
+	font-size: 22px;
+	color: #da0202;
+}
+
+.cls-project-inactive {
+	font-size: 18px;
+	color: #da0202;
+	font-weight: bold;
+	float: right;
+	margin-top: -38px;
+	margin-right: 30px;
+}
