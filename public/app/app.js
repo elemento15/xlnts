@@ -18,7 +18,20 @@ app.config(function ($routeProvider, $provide, toastrConfig) {
 				templateUrl: '/partials/home.html'
 			})
 		
-		.when('/windows',{
+		.when('/users',{
+				controller: 'UsersController',
+				templateUrl: '/partials/users/index.html'
+			})
+		.when('/users-new',{
+				controller: 'UsersController',
+				templateUrl: '/partials/users/edit.html'
+			})
+		.when('/users-edit/:id',{
+				controller: 'UsersController',
+				templateUrl: '/partials/users/edit.html'
+			})
+
+		/*.when('/windows',{
 				controller: 'WindowsController',
 				templateUrl: '/partials/windows/index.html'
 			})
@@ -29,85 +42,7 @@ app.config(function ($routeProvider, $provide, toastrConfig) {
 		.when('/windows-edit/:id',{
 				controller: 'WindowsController',
 				templateUrl: '/partials/windows/edit.html'
-			})
-
-		.when('/components',{
-				controller: 'ComponentsController',
-				templateUrl: '/partials/components/index.html'
-			})
-		.when('/components-new',{
-				controller: 'ComponentsController',
-				templateUrl: '/partials/components/edit.html'
-			})
-		.when('/components-edit/:id',{
-				controller: 'ComponentsController',
-				templateUrl: '/partials/components/edit.html'
-			})
-
-		.when('/sectors',{
-				controller: 'SectorsController',
-				templateUrl: '/partials/sectors/index.html'
-			})
-		.when('/sectors-new',{
-				controller: 'SectorsController',
-				templateUrl: '/partials/sectors/edit.html'
-			})
-		.when('/sectors-edit/:id',{
-				controller: 'SectorsController',
-				templateUrl: '/partials/sectors/edit.html'
-			})
-
-		.when('/activities',{
-				controller: 'ActivitiesController',
-				templateUrl: '/partials/activities/index.html'
-			})
-		.when('/activities-new',{
-				controller: 'ActivitiesController',
-				templateUrl: '/partials/activities/edit.html'
-			})
-		.when('/activities-edit/:id',{
-				controller: 'ActivitiesController',
-				templateUrl: '/partials/activities/edit.html'
-			})
-
-		.when('/members',{
-				controller: 'MembersController',
-				templateUrl: '/partials/members/index.html'
-			})
-		.when('/members-new',{
-				controller: 'MembersController',
-				templateUrl: '/partials/members/edit.html'
-			})
-		.when('/members-edit/:id',{
-				controller: 'MembersController',
-				templateUrl: '/partials/members/edit.html'
-			})
-
-		.when('/requirements',{
-				controller: 'RequirementsController',
-				templateUrl: '/partials/requirements/index.html'
-			})
-		.when('/requirements-new',{
-				controller: 'RequirementsController',
-				templateUrl: '/partials/requirements/edit.html'
-			})
-		.when('/requirements-edit/:id',{
-				controller: 'RequirementsController',
-				templateUrl: '/partials/requirements/edit.html'
-			})
-
-		.when('/projects',{
-				controller: 'ProjectsController',
-				templateUrl: '/partials/projects/index.html'
-			})
-		.when('/projects-new',{
-				controller: 'ProjectsController',
-				templateUrl: '/partials/projects/edit.html'
-			})
-		.when('/projects-edit/:id',{
-				controller: 'ProjectsController',
-				templateUrl: '/partials/projects/edit.html'
-			})
+			})*/
 
 		.otherwise({ redirectTo: '/' });
 

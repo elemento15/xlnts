@@ -20,6 +20,15 @@ body {
 	padding: 5px 0px;
 }
 
+.cls-filters-title {
+	font-size: 18px;
+	text-align: center;
+	color: #bbb;
+	margin-top: 10px;
+	margin-bottom: 6px;
+	border-bottom: 1px solid #d8d8d8;
+}
+
 textarea {
 	resize: none;
 }
@@ -30,6 +39,7 @@ h3.cls-title {
 	padding-bottom: 5px;
 	border-bottom: 1px solid #5D88C3;
 	font-size: 20px;
+	font-weight: bold;
 }
 
 h5.cls-title {

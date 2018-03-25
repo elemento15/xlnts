@@ -1,0 +1,34 @@
+<div class="container-fluid">
+	<h3 class="cls-title">{{title}}</h3>
+
+	<form class="row">
+		<div class="col-sm-6">
+			<div class="form-group">
+				<label>Nombre:</label>
+				<input type="text" class="form-control" ng-model="data.name" autocomplete="off" maxlength="255">
+			</div>
+
+			<div class="form-group">
+				<label>Email:</label>
+				<input type="text" class="form-control" ng-model="data.email" autocomplete="off" maxlength="255">
+			</div>
+
+			<div class="form-group">
+				<label>Rol:</label>
+				<select class="form-control" ng-model="data.role_id">
+					<option selected="true" disabled="disabled" value="">-- Seleccione --</option>
+					<option ng-repeat="opt in rolesList" value="{{opt.id}}" ng-selected="data.role_id == opt.id">{{ opt.name }}</option>
+				</select>
+			</div>
+
+			<!--<div class="form-group">
+				<label>Password:</label>
+				<input type="password" class="form-control" ng-model="data.password" autocomplete="off" maxlength="50">
+			</div>-->
+		</div>
+	</form>
+
+	<!-- form toolbar -->
+	<div ng-include="tpls.form_toolbar"></div>
+		
+</div>

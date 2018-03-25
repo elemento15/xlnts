@@ -14,8 +14,17 @@
 /*Route::get('/', function () {
     return view('welcome');
 });*/
+
 Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::resource('roles', 'RolesController');
+
+Route::group(['middleware' => ['admin']], function () {
+	Route::resource('users', 'UsersController');
+	Route::post('users/{id}/activate', 'UsersController@activate');
+	Route::post('users/{id}/deactivate', 'UsersController@deactivate');
+});
