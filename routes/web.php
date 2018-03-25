@@ -31,4 +31,8 @@ Route::group(['middleware' => ['admin']], function () {
 	Route::resource('groups', 'GroupsController');
 	Route::post('groups/{id}/activate', 'GroupsController@activate');
 	Route::post('groups/{id}/deactivate', 'GroupsController@deactivate');
+
+	Route::resource('attributes', 'AttributesController');
+	Route::post('attributes/{id}/activate', 'AttributesController@activate');
+	Route::post('attributes/{id}/deactivate', 'AttributesController@deactivate');
 });

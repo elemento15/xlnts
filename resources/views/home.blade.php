@@ -29,6 +29,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="#/groups">Grupos</a></li>
+                            <li><a href="#/attributes">Atributos</a></li>
                         </ul>
                     </li>
                 </ul>

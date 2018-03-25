@@ -51,3 +51,26 @@ app.factory('GroupService', ['$http', function($http) {
 		}
 	} 
 }]);
+
+app.factory('AttributeService', ['$http', function($http) {
+	return {
+		get      : function (data) {
+			return $http.get('attributes/'+ data.id);
+		},
+		save     : function (data) {
+			return (data.id) ? $http.patch('attributes/'+ data.id, data) : $http.post('attributes', data);
+		},
+		read     : function(data) {
+			return $http.get('attributes?'+ jQuery.param(data), data);
+		},
+		delete   : function(data) {
+			return $http.delete('attributes/'+ data.id);
+		},
+		activate : function(data) {
+			return $http.post('attributes/'+ data.id +'/activate');
+		},
+		deactivate : function(data) {
+			return $http.post('attributes/'+ data.id +'/deactivate');
+		}
+	} 
+}]);

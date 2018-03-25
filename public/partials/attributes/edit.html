@@ -1,0 +1,26 @@
+<div class="container-fluid">
+	<h3 class="cls-title">{{title}}</h3>
+
+	<form class="row">
+		<div class="col-sm-6">
+			<div class="form-group">
+				<label>Nombre:</label>
+				<input type="text" class="form-control" ng-model="data.name" autocomplete="off" maxlength="50">
+			</div>
+
+			<div class="form-group">
+				<label>Mínimo:</label>
+				<input type="number" class="form-control" ng-model="data.min" autocomplete="off">
+			</div>
+
+			<div class="form-group">
+				<label>Máximo:</label>
+				<input type="number" class="form-control" ng-model="data.max" autocomplete="off">
+			</div>
+		</div>
+	</form>
+
+	<!-- form toolbar -->
+	<div ng-include="tpls.form_toolbar"></div>
+		
+</div>
