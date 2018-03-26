@@ -44,6 +44,7 @@ app.controller('ProductsController', function ($scope, $http, $route, $location,
 			description: '',
 			type: 'P',
 			group: null,
+			group_id: '',
 			price: 0,
 			has_attributes: false,
 			comments: ''

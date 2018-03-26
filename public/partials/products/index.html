@@ -6,10 +6,26 @@
 		<div class="col-sm-7">
 			<div class="row cls-toolbar">
 				<!-- new button -->
-				<div class="col-sm-6" ng-include="tpls.new_button"></div>
+				<div class="col-sm-1" ng-include="tpls.new_button_sm"></div>
+
+				<!-- group filter -->
+				<div class="col-sm-4">
+					<select class="form-control" ng-model="filters.group_id" ng-change="changeFilter()">
+						<option value="">(Todos los grupos)</option>
+						<option data-ng-repeat="group in groupsList" value="{{ group.id }}">{{ group.name }}</option>
+					</select>
+				</div>
+				
+				<div class="col-sm-3">
+					<select class="form-control" ng-model="filters.type" ng-change="changeFilter()">
+						<option value="">(Todos los tipos)</option>
+						<option value="P">Productos</option>
+						<option value="S">Servicios</option>
+					</select>
+				</div>
 
 				<!-- search input -->
-				<div class="col-sm-6" ng-include="tpls.search"></div>
+				<div class="col-sm-4" ng-include="tpls.search"></div>
 			</div>
 
 			<table class="table table-condensed table-bordered cls-table">
