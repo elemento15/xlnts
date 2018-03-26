@@ -22,7 +22,7 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li><a href="#/users">Usuarios</a></li>
-                    <!--<li><a href="#/members">Inventarios</a></li>-->
+                    <li><a href="#/products">Productos</a></li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             Catálogos <span class="caret"></span>

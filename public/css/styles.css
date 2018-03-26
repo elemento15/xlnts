@@ -205,3 +205,14 @@ ul.pagination li span:hover {
 	margin-top: -38px;
 	margin-right: 30px;
 }
+
+.cls-side-form {
+	border: 1px solid #b7cae4;
+	border-radius: 5px;
+	padding: 10px;
+	margin-bottom: 5px;
+}
+
+.label-light {
+	background-color: #bbb;
+}

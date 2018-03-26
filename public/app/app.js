@@ -17,6 +17,11 @@ app.config(function ($routeProvider, $provide, toastrConfig) {
 				controller: 'HomeController',
 				templateUrl: '/partials/home.html'
 			})
+
+		.when('/products',{
+				controller: 'ProductsController',
+				templateUrl: '/partials/products/index.html'
+			})
 		
 		.when('/users',{
 				controller: 'UsersController',
@@ -75,4 +80,18 @@ app.config(function ($routeProvider, $provide, toastrConfig) {
 	// regular expression definitions
 	app.regexpRFC = /^([A-Z,Ñ,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})$/;
 	app.regexpEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+});
+
+app.directive('stringToNumber', function() {
+	return {
+		require: 'ngModel',
+		link: function (scope, element, attrs, ngModel) {
+			ngModel.$parsers.push(function(value) {
+				return '' + value;
+			});
+			ngModel.$formatters.push(function(value) {
+				return  parseFloat(value, 10);
+			});
+		}
+	}
 });

@@ -74,3 +74,26 @@ app.factory('AttributeService', ['$http', function($http) {
 		}
 	} 
 }]);
+
+app.factory('ProductService', ['$http', function($http) {
+	return {
+		get      : function (data) {
+			return $http.get('products/'+ data.id);
+		},
+		save     : function (data) {
+			return (data.id) ? $http.patch('products/'+ data.id, data) : $http.post('products', data);
+		},
+		read     : function(data) {
+			return $http.get('products?'+ jQuery.param(data), data);
+		},
+		delete   : function(data) {
+			return $http.delete('products/'+ data.id);
+		},
+		activate : function(data) {
+			return $http.post('products/'+ data.id +'/activate');
+		},
+		deactivate : function(data) {
+			return $http.post('products/'+ data.id +'/deactivate');
+		}
+	} 
+}]);
