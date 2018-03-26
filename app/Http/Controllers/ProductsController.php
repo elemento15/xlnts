@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Response;
 use Illuminate\Http\Request;
+use App\Product;
+use App\AttributeProduct;
 
 class ProductsController extends BaseController
 {
@@ -11,7 +14,7 @@ class ProductsController extends BaseController
     // params needen for index
     protected $searchFields = ['description'];
     protected $indexPaginate = 10;
-    protected $indexJoins = ['group'];
+    protected $indexJoins = ['group','attributes'];
     protected $orderBy = ['field' => 'description', 'type' => 'ASC'];
     
     // params needer for show
@@ -31,4 +34,26 @@ class ProductsController extends BaseController
     protected $allowUpdate = true;
     protected $allowStore  = true;
     protected $except = [];
+
+    public function saveAttributes($id, Request $request)
+    {
+        $product = Product::find($id);
+        $checked = 0; // count how many attributes are checked
+
+        // save attributes related to product
+        foreach ($request['attributes'] as $item) {
+            $product->attributes()->updateOrCreate(
+                ['attribute_id' => $item['attribute_id']],
+                ['checked' => $item['checked']]
+            );
+
+            $checked += ($item['checked']) ? 1 : 0;
+        }
+
+        // update product's 'has_attributes'
+        $product->has_attributes = ($checked) ? true : false;
+        $product->save(); 
+
+        return Response::json($product);
+    }
 }

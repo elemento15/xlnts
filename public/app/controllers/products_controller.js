@@ -36,6 +36,7 @@ app.controller('ProductsController', function ($scope, $http, $route, $location,
 
 	$scope.groupsList = [];
 	$scope.attributesList = [];
+	$scope.attributesProducts = [];
 
 	$scope.clearModel = function () {
 		$scope.data = {
@@ -88,8 +89,56 @@ app.controller('ProductsController', function ($scope, $http, $route, $location,
 	}
 
 	$scope.showAttributes = function (record) {
+		var attrProd = [];
 		$scope.data = $scope.getRecord(record.id);
+
+		// pass all the attributes, setting those related to product that are checked
+		$scope.attributesList.forEach(function (item) {
+			attrProd.push({
+				attribute_id: item.id, 
+				name: item.name,
+				min: item.min,
+				max: item.max,
+				checked: $scope.getCheckedAttr(item.id, $scope.data.attributes)
+			});
+		});
+
+		$scope.attributesProducts = attrProd;
 		$scope.showView = 'A';
+	}
+
+	$scope.changeAttrSelection = function (attribute) {
+		attribute.checked = !attribute.checked;
+	}
+
+	$scope.saveAttributes = function () {
+		var data = {
+			id: $scope.data.id,
+			attributes: $scope.attributesProducts
+		};
+
+		ProductService.saveAttributes(data)
+			.success(function(response) {
+				toastr.success('Registro guardado');
+				$scope.read();
+			})
+			.error(function(response) {
+				if (response.errors) {
+					response.errors.forEach(function (item) {
+						toastr.error(item);
+					});
+				} else {
+					toastr.error(response.msg || 'Error en el servidor');
+				}
+			});
+	}
+
+	$scope.getCheckedAttr = function (attr_id, data) {
+		var attr = data.filter(function (item) {
+			return (attr_id == item.attribute_id);
+		});
+
+		return (attr.length) ? attr[0]['checked'] : false;
 	}
 	
 	$scope.$on('$viewContentLoaded', function (view) {

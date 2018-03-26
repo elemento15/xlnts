@@ -94,6 +94,9 @@ app.factory('ProductService', ['$http', function($http) {
 		},
 		deactivate : function(data) {
 			return $http.post('products/'+ data.id +'/deactivate');
+		},
+		saveAttributes : function (data) {
+			return $http.post('products/'+ data.id +'/attributes', data);
 		}
 	} 
 }]);

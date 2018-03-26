@@ -153,9 +153,10 @@
 							<div class="col-sm-8 col-sm-offset-2">
 								<table class="table table-sm table-condensed">
 									<tbody>
-										<tr ng-repeat="attr in attributesList">
+										<tr ng-repeat="attr in attributesProducts">
 											<td width="80">
-												<button class="btn btn-xs btn-info"> {{ attr.name }} </button>
+												<button class="btn btn-xs btn-success" ng-show="attr.checked" ng-click="changeAttrSelection(attr)"> {{ attr.name }} </button>
+												<button class="btn btn-xs btn-info" ng-hide="attr.checked" ng-click="changeAttrSelection(attr)"> {{ attr.name }} </button>
 											</td>
 											<td class="text-primary" title="Minimo - Máximo">
 												{{ attr.min }} - {{ attr.max }}

@@ -39,4 +39,5 @@ Route::group(['middleware' => ['admin']], function () {
 	Route::resource('products', 'ProductsController');
 	Route::post('products/{id}/activate', 'ProductsController@activate');
 	Route::post('products/{id}/deactivate', 'ProductsController@deactivate');
+	Route::post('products/{id}/attributes', 'ProductsController@saveAttributes');
 });

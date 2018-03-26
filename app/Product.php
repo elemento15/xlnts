@@ -19,4 +19,9 @@ class Product extends Model
     {
         return $this->belongsTo('App\Group');
     }
+
+    public function attributes()
+    {
+        return $this->hasMany('App\AttributeProduct');
+    }
 }
