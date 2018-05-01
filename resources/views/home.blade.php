@@ -30,6 +30,8 @@
                         <ul class="dropdown-menu">
                             <li><a href="#/groups">Grupos</a></li>
                             <li><a href="#/attributes">Atributos</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#/movement-concepts">Conceptos de Movimientos</a></li>
                         </ul>
                     </li>
                 </ul>

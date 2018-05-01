@@ -62,18 +62,18 @@ app.config(function ($routeProvider, $provide, toastrConfig) {
 				templateUrl: '/partials/attributes/edit.html'
 			})
 
-		/*.when('/windows',{
-				controller: 'WindowsController',
-				templateUrl: '/partials/windows/index.html'
+		.when('/movement-concepts',{
+				controller: 'MovementConceptsController',
+				templateUrl: '/partials/mov_concepts/index.html'
 			})
-		.when('/windows-new',{
-				controller: 'WindowsController',
-				templateUrl: '/partials/windows/edit.html'
+		.when('/movement-concepts-new',{
+				controller: 'MovementConceptsController',
+				templateUrl: '/partials/mov_concepts/edit.html'
 			})
-		.when('/windows-edit/:id',{
-				controller: 'WindowsController',
-				templateUrl: '/partials/windows/edit.html'
-			})*/
+		.when('/movement-concepts-edit/:id',{
+				controller: 'MovementConceptsController',
+				templateUrl: '/partials/mov_concepts/edit.html'
+			})
 
 		.otherwise({ redirectTo: '/' });
 

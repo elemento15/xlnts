@@ -54,5 +54,6 @@
     <script src="/app/controllers/groups_controller.js"></script>
     <script src="/app/controllers/attributes_controller.js"></script>
     <script src="/app/controllers/products_controller.js"></script>
+    <script src="/app/controllers/movement_concepts_controller.js"></script>
 </body>
 </html>

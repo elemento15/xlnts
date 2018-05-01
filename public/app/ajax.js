@@ -100,3 +100,26 @@ app.factory('ProductService', ['$http', function($http) {
 		}
 	} 
 }]);
+
+app.factory('MovementConceptService', ['$http', function($http) {
+	return {
+		get      : function (data) {
+			return $http.get('movement_concepts/'+ data.id);
+		},
+		save     : function (data) {
+			return (data.id) ? $http.patch('movement_concepts/'+ data.id, data) : $http.post('movement_concepts', data);
+		},
+		read     : function(data) {
+			return $http.get('movement_concepts?'+ jQuery.param(data), data);
+		},
+		delete   : function(data) {
+			return $http.delete('movement_concepts/'+ data.id);
+		},
+		activate : function(data) {
+			return $http.post('movement_concepts/'+ data.id +'/activate');
+		},
+		deactivate : function(data) {
+			return $http.post('movement_concepts/'+ data.id +'/deactivate');
+		}
+	} 
+}]);
