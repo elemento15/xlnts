@@ -14,4 +14,9 @@ class MovementConcept extends Model
     protected $fillable = [
         'name', 'code', 'type', 'active'
     ];
+
+    public function movements()
+    {
+        return $this->hasMany('App\Movements');
+    }
 }

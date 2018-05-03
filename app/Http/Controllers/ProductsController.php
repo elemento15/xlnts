@@ -14,11 +14,11 @@ class ProductsController extends BaseController
     // params needen for index
     protected $searchFields = ['description'];
     protected $indexPaginate = 8;
-    protected $indexJoins = ['group','attributes'];
+    protected $indexJoins = ['group','attributes','stock'];
     protected $orderBy = ['field' => 'description', 'type' => 'ASC'];
     
     // params needer for show
-    protected $showJoins = ['group'];
+    protected $showJoins = ['group','stock'];
 
     // params needed for store/update
     // protected $saveFields = ['description','type','group_id','price','has_attributes','comments'];
@@ -34,6 +34,7 @@ class ProductsController extends BaseController
     protected $allowUpdate = true;
     protected $allowStore  = true;
     protected $except = [];
+
 
     public function saveAttributes($id, Request $request)
     {
@@ -55,5 +56,21 @@ class ProductsController extends BaseController
         $product->save(); 
 
         return Response::json($product);
+    }
+
+
+    public function searchProduct(Request $request)
+    {
+        $product = Product::where('description', 'LIKE', '%'.$request->description.'%')
+                        ->where('active', true)
+                        ->where('type', 'P')
+                        ->with('group');
+        $count = $product->count();
+
+        if ($count == 1) {
+            return Response::json(array('success' => true, 'total' => 1, 'product' => $product->first()));
+        } else {
+            return Response::json(array('success' => true, 'total' => $count));
+        }
     }
 }

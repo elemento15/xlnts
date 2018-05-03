@@ -97,6 +97,9 @@ app.factory('ProductService', ['$http', function($http) {
 		},
 		saveAttributes : function (data) {
 			return $http.post('products/'+ data.id +'/attributes', data);
+		},
+		searchProduct : function (data) {
+			return $http.post('products/search-product', data);
 		}
 	} 
 }]);
@@ -120,6 +123,23 @@ app.factory('MovementConceptService', ['$http', function($http) {
 		},
 		deactivate : function(data) {
 			return $http.post('movement_concepts/'+ data.id +'/deactivate');
+		}
+	} 
+}]);
+
+app.factory('MovementService', ['$http', function($http) {
+	return {
+		get      : function (data) {
+			return $http.get('movements/'+ data.id);
+		},
+		save     : function (data) {
+			return (data.id) ? $http.patch('movements/'+ data.id, data) : $http.post('movements', data);
+		},
+		read     : function(data) {
+			return $http.get('movements?'+ jQuery.param(data), data);
+		},
+		cancel : function (data) {
+			return $http.post('movements/'+ data.id +'/cancel');
 		}
 	} 
 }]);

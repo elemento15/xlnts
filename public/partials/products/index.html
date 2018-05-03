@@ -36,6 +36,7 @@
 						<th width="80" class="text-center">Tipo</th>
 						<th width="60" class="text-center">Atrib.</th>
 						<th width="85" class="text-center">Precio</th>
+						<th width="70" class="text-center">Stock</th>
 						<th width="70" class="text-center">Estado</th>
 					</tr>
 				</thead>
@@ -56,6 +57,7 @@
 							<label ng-hide="rec.has_attributes" class="label label-light cls-pointer" ng-click="showAttributes(rec)">No</label>
 						</td>
 						<td class="text-right">${{ rec.price | number : 2 }}</td>
+						<td class="text-right cls-small text-muted">{{ rec.stock.quantity }}</td>
 						<!-- change status component -->
 						<td align="center" ng-include="tpls.change_status"></td>
 					</tr>

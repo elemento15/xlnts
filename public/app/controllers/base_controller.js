@@ -31,6 +31,7 @@ function BaseController($scope, $route, $location, $ngConfirm, ModelService, toa
 		paginator     : 'partials/_tpls/index_paginator.html',
 		actions       : 'partials/_tpls/index_actions.html',
 		filter_status : 'partials/_tpls/index_filter_status.html',
+		filter_cancel : 'partials/_tpls/index_filter_cancel.html',
 		change_status : 'partials/_tpls/index_change_status.html',
 		form_toolbar  : 'partials/_tpls/form_toolbar.html',
 	}

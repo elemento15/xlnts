@@ -1,0 +1,119 @@
+<div class="container-fluid">
+	<h3 class="cls-title">{{title}}</h3>
+
+	<form class="row">
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label>Tipo:&nbsp;&nbsp;</label> 
+				
+				<b ng-if="!isNew()" style="padding: 6px 0px; display: inline-block;">
+					<span class="text-primary" ng-show="data.type == 'E'">Entrada</span>
+					<span class="text-danger" ng-show="data.type == 'S'">Salida</span>
+				</b>
+				
+				<div ng-if="isNew()" class="radio-inline" style="padding: 6px 0px;">
+					<label class="radio-inline">
+						<input type="radio" ng-model="data.type" name="optType" value="E" ng-change="changeType()"> Entrada
+					</label>
+					<label class="radio-inline">
+						<input type="radio" ng-model="data.type" name="optType" value="S" ng-change="changeType()"> Salida
+					</label>
+				</div>
+			</div>
+
+			
+			<div class="form-group">
+				<label>Concepto:</label>
+				
+				<select class="form-control" ng-model="data.movement_concept_id" ng-if="isNew()">
+					<option value="">-- Seleccione concepto --</option>
+					<option ng-repeat="(key, opt) in conceptsList" value="{{opt.id}}">{{ opt.name }}</option>
+				</select>
+				
+				<p class="text-info" ng-else>{{ data.movement_concept.name }}</p>
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div>
+				<label>Fecha del Movimiento:</label>
+				<p class="text-info">{{ data.mov_date.substr(0,10) }}</p>
+			</div>
+
+			<div ng-show="data.cancel_date">
+				<label>Fecha de Cancelación:</label>
+				<p class="text-danger">{{ data.cancel_date.substr(0,10) }}</p>
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="form-group">
+	            <label>Comentarios:</label>
+	            <textarea class="form-control" ng-model="data.comments" rows="5"></textarea>
+	        </div>
+		</div>
+	</form>
+
+	<!-- Product search form -->
+	<div class="row form-inline form-group-sm" ng-if="isNew()">
+		<div class="col-sm-12 cls-form-detail">
+			<input type="text" ng-model="product.description" class="form-control cls-input-large" 
+			       placeholder="Descripción" ng-keyup="enterDescription($event)">
+			<input type="number" ng-model="product.quantity" class="form-control cls-input-small text-right" 
+			       placeholder="Cantidad" ng-keyup="enterQuantity($event)">
+			<button class="btn btn-xs btn-info btnSearch" title="Busqueda">
+				<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+			</button>
+			<button class="btn btn-xs btn-success btnAdd" title="Agregar" ng-click="addProduct()">
+				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+			</button>
+			<button class="btn btn-xs btn-default btnClear" title="Limpiar">
+				<span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+			</button>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<table class="table table-bordered cls-table-sm" id="productsList">
+				<thead>
+					<tr>
+						<th>Descripción</th>
+						<th>Grupo</th>
+						<th width="120" class="text-center">Cantidad</th>
+						<th width="80" class="text-center">Acciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="(key, item) in data.products">
+						<td>{{ item.description || item.product.description }}</td>
+						<td>{{ item.group || item.product.group.name }}</td>
+						<td class="text-right">
+							<span ng-hide="item._editing" ng-dblclick="showDetailQuantity(item)">{{ item.quantity | number:2 }}</span>
+							<input type="number" class="form-control input-sm text-right" min="1" 
+							       ng-model="editing.quantity" ng-show="item._editing" 
+							       ng-keyup="keyUpDetailQuantity($event, item)" ng-blur="blurQuantityDetail(item)">
+						</td>
+						<td class="text-center">
+							<div class="cls-actions" ng-if="isNew()">
+								<span class="label label-danger cls-pointer" ng-click="deleteProduct(key)">X</span>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<!-- form toolbar -->
+	<div ng-if="isNew()" ng-include="tpls.form_toolbar"></div>
+
+	<div ng-if="!isNew()" class="row cls-toolbar">
+		<div class="col-sm-12">
+			<button class="btn btn-default btn-sm" ng-click="close()">
+				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cerrar
+			</button>
+		</div>
+	</div>
+		
+</div>

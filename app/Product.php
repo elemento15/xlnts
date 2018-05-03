@@ -24,4 +24,24 @@ class Product extends Model
     {
         return $this->hasMany('App\AttributeProduct');
     }
+
+    public function stock()
+    {
+        return $this->hasOne('App\Stock');
+    }
+
+    public function updateStock($type, $quantity)
+    {
+        $quantity = ($type == 'E') ? $quantity : ($quantity * -1);
+
+        if ($stock = Stock::findByProduct($this->id)) {
+            $stock->quantity += $quantity;
+            $stock->save();
+        } else {
+            Stock::create([
+                'product_id' => $this->id,
+                'quantity' => $quantity
+            ]);
+        }
+    }
 }

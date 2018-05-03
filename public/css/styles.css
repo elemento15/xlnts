@@ -216,3 +216,7 @@ ul.pagination li span:hover {
 .label-light {
 	background-color: #bbb;
 }
+
+input.cls-input-large { width: 250px !important; }
+input.cls-input-medium { width: 150px !important; }
+input.cls-input-small { width: 90px !important; }

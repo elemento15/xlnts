@@ -75,6 +75,19 @@ app.config(function ($routeProvider, $provide, toastrConfig) {
 				templateUrl: '/partials/mov_concepts/edit.html'
 			})
 
+		.when('/movements',{
+				controller: 'MovementsController',
+				templateUrl: '/partials/movements/index.html'
+			})
+		.when('/movements-new',{
+				controller: 'MovementsController',
+				templateUrl: '/partials/movements/edit.html'
+			})
+		.when('/movements-edit/:id',{
+				controller: 'MovementsController',
+				templateUrl: '/partials/movements/edit.html'
+			})
+
 		.otherwise({ redirectTo: '/' });
 
 	// regular expression definitions

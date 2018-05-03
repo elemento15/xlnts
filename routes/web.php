@@ -44,4 +44,10 @@ Route::group(['middleware' => ['admin']], function () {
 	Route::resource('movement_concepts', 'MovementConceptsController');
 	Route::post('movement_concepts/{id}/activate', 'MovementConceptsController@activate');
 	Route::post('movement_concepts/{id}/deactivate', 'MovementConceptsController@deactivate');
+
+	Route::post('movements/{id}/cancel', 'MovementsController@cancel');
 });
+
+Route::post('products/search-product', 'ProductsController@searchProduct');
+
+Route::resource('movements', 'MovementsController');

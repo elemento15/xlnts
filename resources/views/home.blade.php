@@ -21,8 +21,9 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="#/users">Usuarios</a></li>
+                    <!--<li><a href="#/users">Usuarios</a></li>-->
                     <li><a href="#/products">Productos</a></li>
+                    <li><a href="#/movements">Movimientos</a></li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             Catálogos <span class="caret"></span>
@@ -32,6 +33,8 @@
                             <li><a href="#/attributes">Atributos</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="#/movement-concepts">Conceptos de Movimientos</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#/users">Usuarios</a></li>
                         </ul>
                     </li>
                 </ul>

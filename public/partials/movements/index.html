@@ -1,0 +1,65 @@
+<div class="container-fluid">
+	<h3 class="cls-title">Movimientos</h3>
+	
+	<div class="row">
+		<div class="col-sm-2">
+			<div class="cls-filters-title">Filtros</div>
+
+			<!-- status filter -->
+			<div ng-include="tpls.filter_cancel"></div>
+		</div>
+		
+		<div class="col-sm-10">
+			<div class="row cls-toolbar">
+				<!-- new button -->
+				<div class="col-sm-8" ng-include="tpls.new_button"></div>
+
+				<!-- search input -->
+				<div class="col-sm-4" ng-include="tpls.search"></div>
+			</div>
+
+			<table class="table table-condensed table-bordered cls-table">
+				<thead>
+					<tr>
+						<th width="75">Acciones</th>
+						<th class="text-center" width="100">Fecha</th>
+						<th class="text-center" width="80">Tipo</th>
+						<th>Concepto</th>
+						<th width="100" class="text-center">Estado</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr data-ng-repeat="(key, rec) in list">
+						<!-- actions buttons -->
+						<td class="text-center">
+							<div class="cls-actions">
+								<button class="btn btn-info btn-xs" ng-click="view(rec.id)">
+									<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+								</button>
+								<button class="btn btn-danger btn-xs" ng-click="cancel(rec.id)">
+									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+								</button>
+							</div>
+						</td>
+						<td class="text-center">{{ rec.mov_date.substr(0, 10) }}</td>
+						<td class="text-center">
+							<span ng-show="rec.type == 'E'" class="label label-info">Entrada</span>
+							<span ng-show="rec.type == 'S'" class="label label-light">Salida</span>
+						</td>
+						<td>{{ rec.movement_concept.name }}</td>
+						
+						<td align="center">
+							<div>
+								<span class="label label-default" ng-show="rec.active">Activo</span>
+								<span class="label label-danger" ng-hide="rec.active">Cancelado</span>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<!-- paginator -->
+			<div class="row" ng-include="tpls.paginator"></div>
+		</div>
+	</div>
+</div>
