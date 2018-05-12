@@ -45,7 +45,7 @@
     <script src="/app/ajax.js"></script>
 
     <!-- components -->
-    <!-- <script src="/app/components/XXX.js"></script> -->
+    <script src="/app/components/modal_products_search.js"></script>
 
     <!-- controllers -->
     <script src="/app/controllers/base_controller.js"></script>

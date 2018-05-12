@@ -23,12 +23,21 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('roles', 'RolesController');
 
+Route::get('products', 'ProductsController@index');
+Route::post('products/search-product', 'ProductsController@searchProduct');
+Route::get('groups', 'GroupsController@index');
+Route::get('movement_concepts', 'MovementConceptsController@index');
+Route::resource('movements', 'MovementsController');
+
+
 Route::group(['middleware' => ['admin']], function () {
 	Route::resource('users', 'UsersController');
 	Route::post('users/{id}/activate', 'UsersController@activate');
 	Route::post('users/{id}/deactivate', 'UsersController@deactivate');
 
-	Route::resource('groups', 'GroupsController');
+	Route::resource('groups', 'GroupsController', [
+		'except' => ['index']
+	]);
 	Route::post('groups/{id}/activate', 'GroupsController@activate');
 	Route::post('groups/{id}/deactivate', 'GroupsController@deactivate');
 
@@ -36,18 +45,18 @@ Route::group(['middleware' => ['admin']], function () {
 	Route::post('attributes/{id}/activate', 'AttributesController@activate');
 	Route::post('attributes/{id}/deactivate', 'AttributesController@deactivate');
 
-	Route::resource('products', 'ProductsController');
+	Route::resource('products', 'ProductsController', [
+		'except' => ['index']
+	]);
 	Route::post('products/{id}/activate', 'ProductsController@activate');
 	Route::post('products/{id}/deactivate', 'ProductsController@deactivate');
 	Route::post('products/{id}/attributes', 'ProductsController@saveAttributes');
 
-	Route::resource('movement_concepts', 'MovementConceptsController');
+	Route::resource('movement_concepts', 'MovementConceptsController', [
+		'except' => ['index']
+	]);
 	Route::post('movement_concepts/{id}/activate', 'MovementConceptsController@activate');
 	Route::post('movement_concepts/{id}/deactivate', 'MovementConceptsController@deactivate');
 
 	Route::post('movements/{id}/cancel', 'MovementsController@cancel');
 });
-
-Route::post('products/search-product', 'ProductsController@searchProduct');
-
-Route::resource('movements', 'MovementsController');

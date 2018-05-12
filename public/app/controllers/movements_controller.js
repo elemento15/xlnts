@@ -1,4 +1,4 @@
-app.controller('MovementsController', function ($scope, $http, $route, $location, $ngConfirm, $timeout, 
+app.controller('MovementsController', function ($scope, $http, $route, $location, $ngConfirm, $timeout, $uibModal,
 	                                            MovementService, MovementConceptService, ProductService, toastr) {
 	this.index = '/movements';
 	this.title = {
@@ -116,26 +116,21 @@ app.controller('MovementsController', function ($scope, $http, $route, $location
 
 	$scope.searchProduct = function () {
 		var data = { description: this.product.description };
+		
+		if (! data.description) {
+			return false;
+		}
 
 		ProductService.searchProduct(data)
 			.success(function (response) {
 				if (response.success) {
 					// found one match, set product 
 					if (response.total == 1) {
-						$scope.product = {
-							id: response.product.id,
-							description: response.product.description,
-							group: response.product.group.name,
-							quantity: 1
-						};
-
-						// set focus to quantity
-						$timeout(function () {
-							$('[ng-model="product.quantity"]').select();
-						}, 100);
+						$scope.setProduct(response.product);
+						$scope.focusQuantity();
 
 					} else {
-						// TODO: open search modal...
+						$scope.openSearch(data.description);
 					}
 				} else {
 					// TODO: Catch error
@@ -143,6 +138,21 @@ app.controller('MovementsController', function ($scope, $http, $route, $location
 			}).error(function (response) {
 				toastr.error(response.msg || 'Error en el servidor');
 			});
+	}
+
+	$scope.setProduct = function (product) {
+		$scope.product = {
+			id: product.id,
+			description: product.description,
+			group: product.group.name,
+			quantity: 1
+		};
+	}
+
+	$scope.focusQuantity = function () {
+		$timeout(function () {
+			$('[ng-model="product.quantity"]').select();
+		}, 100);
 	}
 
 	$scope.addProduct = function () {
@@ -155,6 +165,31 @@ app.controller('MovementsController', function ($scope, $http, $route, $location
 
 		$scope.data.products.push(product);
 		$scope.clearProduct();
+	}
+
+	$scope.openSearch = function (search) {
+		var modal = $uibModal.open({
+			ariaLabelledBy: 'modal-title',
+			ariaDescribedBy: 'modal-body',
+			templateUrl: '/partials/_components/modalProducts.html',
+			controller: 'ModalProductsSearch',
+			controllerAs: '$ctrl',
+			resolve: {
+				items: function () {
+					return {
+						search: search || '',
+						type: 'P' // P = Products, S = Services, null/false = All
+					};
+				}
+			}
+		});
+
+		modal.result.then(function (product) {
+			if (product) {
+				$scope.setProduct(product);
+				$scope.focusQuantity();
+			}
+		});
 	}
 
 	$scope.clearProduct = function () {

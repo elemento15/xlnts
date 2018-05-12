@@ -57,7 +57,7 @@
 							<label ng-hide="rec.has_attributes" class="label label-light cls-pointer" ng-click="showAttributes(rec)">No</label>
 						</td>
 						<td class="text-right">${{ rec.price | number : 2 }}</td>
-						<td class="text-right cls-small text-muted">{{ rec.stock.quantity }}</td>
+						<td class="text-right cls-small text-muted">{{ (rec.stock.quantity | number) || '-' }}</td>
 						<!-- change status component -->
 						<td align="center" ng-include="tpls.change_status"></td>
 					</tr>

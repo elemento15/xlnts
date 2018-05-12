@@ -61,13 +61,13 @@
 			       placeholder="Descripción" ng-keyup="enterDescription($event)">
 			<input type="number" ng-model="product.quantity" class="form-control cls-input-small text-right" 
 			       placeholder="Cantidad" ng-keyup="enterQuantity($event)">
-			<button class="btn btn-xs btn-info btnSearch" title="Busqueda">
+			<button class="btn btn-xs btn-info btnSearch" title="Busqueda" ng-click="openSearch()">
 				<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 			</button>
 			<button class="btn btn-xs btn-success btnAdd" title="Agregar" ng-click="addProduct()">
 				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 			</button>
-			<button class="btn btn-xs btn-default btnClear" title="Limpiar">
+			<button class="btn btn-xs btn-default btnClear" title="Limpiar" ng-click="clearProduct()">
 				<span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
 			</button>
 		</div>
