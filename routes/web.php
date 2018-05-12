@@ -25,10 +25,16 @@ Route::resource('roles', 'RolesController');
 
 Route::get('products', 'ProductsController@index');
 Route::post('products/search-product', 'ProductsController@searchProduct');
+
 Route::get('groups', 'GroupsController@index');
+
 Route::get('movement_concepts', 'MovementConceptsController@index');
+
 Route::resource('movements', 'MovementsController');
 
+Route::resource('clients', 'ClientsController');
+Route::post('clients/{id}/activate', 'ClientsController@activate');
+Route::post('clients/{id}/deactivate', 'ClientsController@deactivate');
 
 Route::group(['middleware' => ['admin']], function () {
 	Route::resource('users', 'UsersController');

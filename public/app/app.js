@@ -22,6 +22,11 @@ app.config(function ($routeProvider, $provide, toastrConfig) {
 				controller: 'ProductsController',
 				templateUrl: '/partials/products/index.html'
 			})
+
+		.when('/clients',{
+				controller: 'ClientsController',
+				templateUrl: '/partials/clients/index.html'
+			})
 		
 		.when('/users',{
 				controller: 'UsersController',

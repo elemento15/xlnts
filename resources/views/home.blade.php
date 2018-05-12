@@ -22,6 +22,7 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <!--<li><a href="#/users">Usuarios</a></li>-->
+                    <li><a href="#/clients">Clientes</a></li>
                     <li><a href="#/products">Productos</a></li>
                     <li><a href="#/movements">Movimientos</a></li>
                     <li class="dropdown">

@@ -56,5 +56,6 @@
     <script src="/app/controllers/products_controller.js"></script>
     <script src="/app/controllers/movement_concepts_controller.js"></script>
     <script src="/app/controllers/movements_controller.js"></script>
+    <script src="/app/controllers/clients_controller.js"></script>
 </body>
 </html>

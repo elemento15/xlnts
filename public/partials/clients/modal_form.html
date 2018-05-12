@@ -1,0 +1,57 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-title">{{ title }} Cliente</h4>
+</div>
+<div class="modal-body" id="modal-body">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Nombre:</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" ng-model="$parent.data.name" 
+                       autocomplete="off" maxlength="255" placeholder="Ingrese el nombre">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">RFC:</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" ng-model="$parent.data.rfc" 
+                       autocomplete="off" maxlength="13" placeholder="XXXX010101XXX">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Email:</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" ng-model="$parent.data.email" 
+                       autocomplete="off" maxlength="255" placeholder="email@dominio.com">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Teléfono:</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" ng-model="$parent.data.phone" 
+                       autocomplete="off" maxlength="20" placeholder="">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Celular:</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" ng-model="$parent.data.mobile" 
+                       autocomplete="off" maxlength="20" placeholder="">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Comentarios:</label>
+            <div class="col-sm-9">
+                <textarea class="form-control" ng-model="$parent.data.comments" rows="5"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="$parent.save()">Guardar</button>
+    <button class="btn btn-default" type="button" ng-click="$dismiss()">Cerrar</button>
+</div>

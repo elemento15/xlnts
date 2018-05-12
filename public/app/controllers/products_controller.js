@@ -166,11 +166,11 @@ app.controller('ProductsController', function ($scope, $http, $route, $location,
 			controllerAs: '$ctrl',
 			scope: $scope,
 			resolve: {
-				/*items: function () {
+				items: function () {
 					return {
-						search: search || ''
+						// search: search || ''
 					};
-				}*/
+				}
 			}
 		});
 	}
