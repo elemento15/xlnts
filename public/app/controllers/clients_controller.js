@@ -20,6 +20,8 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 		active: null
 	};
 
+	$scope.selectedClient = null;
+
 	$scope.clearModel = function () {
 		$scope.data = {
 			id:  0,
@@ -52,6 +54,10 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 	$scope.$on('$viewContentLoaded', function (view) {
 		// ---
 	});
+
+	$scope.selectClient = function (rec) {
+		$scope.selectedClient = rec;
+	}
 
 	BaseController.call(this, $scope, $route, $location, $ngConfirm, ClientService, toastr);
 	

@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Client extends Model
+class VisitType extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,11 +12,6 @@ class Client extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'rfc', 'email', 'phone', 'mobile', 'birthday', 'comments'
+        'name', 'code'
     ];
-
-    public function visits()
-    {
-        return $this->hasMany('App\Visit');
-    }
 }

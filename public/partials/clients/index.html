@@ -2,7 +2,7 @@
 	<h3 class="cls-title">Clientes</h3>
 
 	<div class="row">
-		<!-- Products list -->
+		<!-- Clients list -->
 		<div class="col-sm-7">
 			<div class="row cls-toolbar">
 				<!-- new button -->
@@ -22,7 +22,8 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr data-ng-repeat="(key, rec) in list">
+					<tr data-ng-repeat="(key, rec) in list" 
+					    ng-click="selectClient(rec)" ng-class="{'cls-selected' : (rec.id == selectedClient.id)}">
 						<!-- actions buttons -->
 						<td ng-include="tpls.actions"></td>
 						<td>
@@ -45,7 +46,37 @@
 
 		<!-- client's visits -->
 		<div class="col-sm-5">
-			...
+			<div class="row cls-toolbar">
+				<div class="col-sm-12">
+					<button class="btn btn-primary btn-sm">
+						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Venta
+					</button>
+					<button class="btn btn-info btn-sm">
+						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Visita
+					</button>
+				</div>
+			</div>
+
+			<table class="table table-condensed table-bordered cls-table">
+				<thead>
+					<tr>
+						<th width="75">Acciones</th>
+						<th>Fecha</th>
+						<th>Tipo</th>
+						<th width="70" class="text-center">Estado</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr data-ng-repeat="(key, rec) in visits">
+						<!-- actions buttons -->
+						<td ng-include="tpls.actions"></td>
+						<td>{{ rec.date }}</td>
+						<td>{{ rec.type }}</td>
+						<!-- change status component -->
+						<td align="center" ng-include="tpls.change_status"></td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>
