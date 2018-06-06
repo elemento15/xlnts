@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class VisitType extends Model
+class VisitAttribute extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,12 +12,13 @@ class VisitType extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'code'
+        'visit_id', 'type', 'attribute_id', 'value'
     ];
 
-    public static function findByCode($code)
+    public $timestamps = false;
+
+    public function attribute()
     {
-    	$type = self::where('code', $code)->first();
-    	return ($type) ? $type : false;
+        return $this->belongsTo('App\Attribute');
     }
 }

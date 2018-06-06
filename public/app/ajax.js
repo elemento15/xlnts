@@ -163,6 +163,26 @@ app.factory('ClientService', ['$http', function($http) {
 		},
 		deactivate : function(data) {
 			return $http.post('clients/'+ data.id +'/deactivate');
+		},
+		saveVisit : function(data) {
+			return $http.post('clients/'+ data.id +'/visit', data)
 		}
-	} 
+	}
+}]);
+
+app.factory('VisitService', ['$http', function($http) {
+	return {
+		get      : function (data) {
+			return $http.get('visits/'+ data.id);
+		},
+		save     : function (data) {
+			return (data.id) ? $http.patch('visits/'+ data.id, data) : $http.post('visits', data);
+		},
+		read     : function(data) {
+			return $http.get('visits?'+ jQuery.param(data), data);
+		},
+		delete   : function(data) {
+			return $http.delete('visits/'+ data.id);
+		}
+	}
 }]);

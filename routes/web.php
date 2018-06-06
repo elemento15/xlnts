@@ -36,6 +36,8 @@ Route::resource('clients', 'ClientsController');
 Route::post('clients/{id}/activate', 'ClientsController@activate');
 Route::post('clients/{id}/deactivate', 'ClientsController@deactivate');
 
+Route::resource('visits', 'VisitsController');
+
 Route::group(['middleware' => ['admin']], function () {
 	Route::resource('users', 'UsersController');
 	Route::post('users/{id}/activate', 'UsersController@activate');

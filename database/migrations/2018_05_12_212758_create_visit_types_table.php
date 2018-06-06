@@ -17,7 +17,7 @@ class CreateVisitTypesTable extends Migration
             $table->increments('id');
             $table->string('name', 50)->unique();
             $table->string('code', 5)->unique();
-            $table->boolean('activoe')->default(1);
+            $table->boolean('active')->default(1);
             $table->timestamps();
         });
     }

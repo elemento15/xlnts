@@ -1,5 +1,5 @@
 app.controller('ClientsController', function ($scope, $http, $route, $location, $ngConfirm, $uibModal,
-	                                          ClientService, toastr) {
+	                                          ClientService, AttributeService, VisitService, toastr) {
 	this.index = '/clients';
 	this.title = {};
 
@@ -16,11 +16,17 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 
 	$scope.data = {};
 
+	$scope.dataAttr = [];
+
 	$scope.filters = {
 		active: null
 	};
 
 	$scope.selectedClient = null;
+
+	$scope.attributesList = [];
+	$scope.visitsList = [];
+
 
 	$scope.clearModel = function () {
 		$scope.data = {
@@ -50,14 +56,108 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 			scope: $scope
 		});
 	}
-	
+
+	$scope.newVisit = function (product) {
+		$scope.dataAttr = [];
+
+		if ($scope.selectedClient) {
+			$scope.modalVisit = $uibModal.open({
+				ariaLabelledBy: 'modal-title',
+				ariaDescribedBy: 'modal-body',
+				templateUrl: '/partials/clients/modal_visit.html',
+				controller: function ($scope) {
+					$scope.client = $scope.selectedClient;
+					$scope.attributes = $scope.attributesList;
+					$scope.date = new Date();
+				},
+				controllerAs: '$ctrl',
+				scope: $scope
+			});
+		}
+	}
+
+	$scope.saveVisit = function () {
+		var success = true;
+		var attrVal;
+		var attrSave = [];
+		var client_id = $scope.selectedClient.id;
+		
+		// validate ranges of attributes
+		$scope.attributesList.forEach(function (item, index) {
+			attrVal = $scope.dataAttr[index];
+
+			if (! attrVal || attrVal < item.min || attrVal > item.max) {
+				success = false;
+				toastr.warning('El valor de '+ item.name +' debe ser entre '+ item.min +' y '+ item.max);
+			}
+			
+			// create the attribute values to save
+			attrSave.push({
+				id: item.id,
+				name: item.name,
+				value: attrVal
+			});
+		});
+
+		if (success) {
+			var data = {
+				client_id: client_id,
+				type: 'VIS',
+				visitAttributes: attrSave
+			};
+
+			VisitService.save(data)
+				.success(function(response) {
+					$scope.modalVisit.dismiss();
+					toastr.success('Visita guardada');
+
+					// update visits list
+					$scope.readVisits(client_id);
+				})
+				.error(function(response) {
+					console.log(response);
+					// TODO: Catch errors
+				});
+		}
+	}
+
+	$scope.readAttributes = function () {
+		AttributeService.read({ filters: [{ field: 'active', value: 1 }] })
+			.success(function (response) {
+				$scope.attributesList = response;
+			}).error(function (response) {
+				toastr.error(response.msg || 'Error en el servidor');
+			});
+	}
+
 	$scope.$on('$viewContentLoaded', function (view) {
-		// ---
+		$scope.readAttributes();
 	});
 
 	$scope.selectClient = function (rec) {
 		$scope.selectedClient = rec;
+		$scope.readVisits(rec.id);
 	}
+
+	$scope.readVisits = function (client_id) {
+		VisitService.read({
+			page: 1,
+			filters: [{ field: 'client_id', value: client_id}],
+			search: ''
+		}).success(function (response) {
+			$scope.visitsList = response.data;
+			/*$scope.list = response.data;
+			$scope.setPagination(response, pagination);*/
+		}).error(function (response) {
+			toastr.error(response.msg || 'Error en el servidor');
+		});
+	}
+
+	$scope.afterRead = function () {
+		$scope.selectedClient = null;
+		$scope.visitsList = [];
+	}
+
 
 	BaseController.call(this, $scope, $route, $location, $ngConfirm, ClientService, toastr);
 	

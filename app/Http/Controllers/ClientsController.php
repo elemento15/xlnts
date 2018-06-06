@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\VisitType;
+use App\Visit;
+use App\VisitAttribute;
 
 class ClientsController extends BaseController
 {
@@ -30,4 +35,34 @@ class ClientsController extends BaseController
     protected $allowUpdate = true;
     protected $allowStore  = true;
     protected $except = [];
+
+
+    /*public function saveVisit($id, Request $request)
+    {
+        // get the visit type for "Visit"
+        $type = VisitType::findByCode('VIS');
+
+        DB::beginTransaction();
+
+        $visit = Visit::create([
+            'visit_date' => date('Y-m-d H:i:s'),
+            'visit_type_id' => $type->id,
+            'client_id' => $id
+        ]);
+
+
+        // save attributes values
+        foreach ($request->visitAttributes as $attr) {
+            VisitAttribute::create([
+                'visit_id'     => $visit->id,
+                'type'         => 'L',
+                'attribute_id' => $attr['id'],
+                'value'       => $attr['value']
+            ]);
+        }
+
+        DB::commit();
+
+        return Response::json($visit);
+    }*/
 }

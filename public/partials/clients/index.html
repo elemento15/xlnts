@@ -48,10 +48,10 @@
 		<div class="col-sm-5">
 			<div class="row cls-toolbar">
 				<div class="col-sm-12">
-					<button class="btn btn-primary btn-sm">
+					<button class="btn btn-primary btn-sm" ng-class="{'disabled' : (!selectedClient)}">
 						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Venta
 					</button>
-					<button class="btn btn-info btn-sm">
+					<button class="btn btn-info btn-sm" ng-class="{'disabled' : (!selectedClient)}" ng-click="newVisit()">
 						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Visita
 					</button>
 				</div>
@@ -60,20 +60,21 @@
 			<table class="table table-condensed table-bordered cls-table">
 				<thead>
 					<tr>
-						<th width="75">Acciones</th>
+						<th align="center">Tipo</th>
 						<th>Fecha</th>
-						<th>Tipo</th>
-						<th width="70" class="text-center">Estado</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr data-ng-repeat="(key, rec) in visits">
-						<!-- actions buttons -->
-						<td ng-include="tpls.actions"></td>
-						<td>{{ rec.date }}</td>
-						<td>{{ rec.type }}</td>
-						<!-- change status component -->
-						<td align="center" ng-include="tpls.change_status"></td>
+					<tr data-ng-repeat="(key, rec) in visitsList">
+						<td class="text-center">
+							<span ng-show="rec.visit_type.code == 'VIS'" class="label label-info">
+								{{ rec.visit_type.name }}
+							</span>
+							<span ng-show="rec.visit_type.code == 'VTA'" class="label label-success">
+								{{ rec.visit_type.name }}
+							</span>
+						</td>
+						<td>{{ rec.visit_date }}</td>
 					</tr>
 				</tbody>
 			</table>
