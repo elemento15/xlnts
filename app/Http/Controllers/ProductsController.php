@@ -61,10 +61,14 @@ class ProductsController extends BaseController
 
     public function searchProduct(Request $request)
     {
-        $product = Product::where('description', 'LIKE', '%'.$request->description.'%')
-                        ->where('active', true)
-                        ->where('type', 'P')
-                        ->with('group');
+        $product = Product::where('description', 'LIKE', '%'.$request->description.'%')->where('active', true);
+
+        if ($request->type) {
+            $product = $product->where('type', $request->type);
+        }
+
+        $product = $product->with('group');
+                        
         $count = $product->count();
 
         if ($count == 1) {

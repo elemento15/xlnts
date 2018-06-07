@@ -115,7 +115,10 @@ app.controller('MovementsController', function ($scope, $http, $route, $location
 	}
 
 	$scope.searchProduct = function () {
-		var data = { description: this.product.description };
+		var data = { 
+			description: this.product.description,
+			type: 'P' 
+		};
 		
 		if (! data.description) {
 			return false;

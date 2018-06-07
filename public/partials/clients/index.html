@@ -1,7 +1,9 @@
 <div class="container-fluid">
-	<h3 class="cls-title">Clientes</h3>
+	<h3 class="cls-title" ng-show="(screen == 'CLIENTS')">Clientes</h3>
+	<h3 class="cls-title" ng-show="(screen == 'SALES')">Ventas</h3>
 
-	<div class="row">
+	<!-- clients screen -->
+	<div class="row" ng-show="(screen == 'CLIENTS')">
 		<!-- Clients list -->
 		<div class="col-sm-7">
 			<div class="row cls-toolbar">
@@ -49,10 +51,12 @@
 		<div class="col-sm-5">
 			<div class="row cls-toolbar">
 				<div class="col-sm-12">
-					<button class="btn btn-primary btn-sm" ng-class="{'disabled' : (!selectedClient)}">
+					<button ng-click="setScreen('SALES')" class="btn btn-primary btn-sm" 
+					        ng-class="{'disabled' : (!selectedClient)}">
 						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Venta
 					</button>
-					<button class="btn btn-info btn-sm" ng-class="{'disabled' : (!selectedClient)}" ng-click="openVisit()">
+					<button ng-click="openVisit()" class="btn btn-info btn-sm" 
+					        ng-class="{'disabled' : (!selectedClient)}">
 						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Visita
 					</button>
 				</div>
@@ -72,8 +76,8 @@
 							      class="label label-info cls-pointer" title="Ver Visita">
 								{{ rec.visit_type.name }}
 							</span>
-							<span ng-show="rec.visit_type.code == 'VTA'" 
-							      class="label label-success cls-pointer" title="Ver Visita">
+							<span ng-show="rec.visit_type.code == 'VTA'"
+							      class="label label-success cls-pointer" title="Ver Venta">
 								{{ rec.visit_type.name }}
 							</span>
 						</td>
@@ -81,6 +85,118 @@
 					</tr>
 				</tbody>
 			</table>
+		</div>
+	</div>
+
+	<!-- sales screen -->
+	<div class="row" ng-show="(screen == 'SALES')">
+		<div class="col-sm-10 col-sm-offset-1">
+			<div class="row">
+				<!-- cliens information -->
+				<div class="col-sm-6">
+					<div>
+						<span class="text-muted">Cliente:</span> 
+						<span class="text-primary"><b>{{ selectedClient.name }}</b></span>
+					</div>
+					<div>
+						<span class="text-muted">RFC:</span> 
+						<span class="text-primary">{{ selectedClient.rfc }}</span>
+					</div>
+					<div>
+						<span class="text-muted">Email:</span> 
+						<span class="text-primary">{{ selectedClient.email }}</span>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+			            <textarea class="form-control" ng-model="sale.comments" rows="4" 
+			                      placeholder="Comentarios de la venta"></textarea>
+			        </div>
+				</div>
+			</div>
+
+			<!-- Product search form -->
+			<div class="row form-inline form-group-sm"><!-- ng-if="isNew()" -->
+				<div class="col-sm-12 cls-form-detail">
+					<input type="text" ng-model="product.description" class="form-control cls-input-large" 
+					       placeholder="Descripción" ng-keyup="enterDescription($event)">
+					<input type="number" ng-model="product.quantity" class="form-control cls-input-small text-right" 
+					       placeholder="Cantidad" ng-keyup="enterQuantity($event)">
+					<button class="btn btn-xs btn-info btnSearch" title="Busqueda" ng-click="openSearch()">
+						<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+					</button>
+					<button class="btn btn-xs btn-success btnAdd" title="Agregar" ng-click="addProduct()">
+						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+					</button>
+					<button class="btn btn-xs btn-default btnClear" title="Limpiar" ng-click="clearProduct()">
+						<span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+					</button>
+				</div>
+			</div>
+
+			<!-- sales products -->
+			<div class="row">
+				<div class="col-sm-12">
+					<table class="table table-bordered cls-table-sm" id="productsList">
+						<thead>
+							<tr>
+								<th width="50" class="text-center">&nbsp;</th>
+								<th>Descripción</th>
+								<th width="75" class="text-center">Tipo</th>
+								<th width="80" class="text-center">Cantidad</th>
+								<th width="90" class="text-center">Precio</th>
+								<th width="90" class="text-center">Total</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="(key, item) in sale.products">
+								<td class="text-center">
+									<div class="cls-actions"><!-- ng-if="isNew()" -->
+										<span class="label label-danger cls-pointer" ng-click="deleteProduct(key)">X</span>
+									</div>
+								</td>
+								<td>
+									<div>{{ item.description || item.product.description }}</div>
+									<div class="cls-small">{{ item.group || item.product.group.name }}</div>
+								</td>
+								<td>
+									<span class="label label-primary" ng-show="item.type == 'P'">Producto</span>
+									<span class="label label-info" ng-show="item.type == 'S'">Servicio</span>
+								</td>
+								<td class="text-right">
+									<span ng-hide="item._editing" ng-dblclick="showDetailQuantity(item)">{{ item.quantity | number:2 }}</span>
+									<input type="number" class="form-control input-sm text-right" min="1" 
+									       ng-model="editing.quantity" ng-show="item._editing" 
+									       ng-keyup="keyUpDetailQuantity($event, item)" ng-blur="blurQuantityDetail(item)">
+								</td>
+								<td class="text-right">${{ item.price | number:2 }}</td>
+								<td class="text-right">${{ item.total | number:2 }}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-8">
+					<button class="btn btn-primary" title="Guardado aun no Implementado">*Guardar</button>
+					<button class="btn btn-warning" ng-click="setScreen('CLIENTS')">Cerrar</button>
+				</div>
+				<div class="col-xs-4">
+					<div class="row">
+						<div class="col-xs-7 text-right">Subtotal:</div>
+						<div class="col-xs-5 text-right">${{ totals.subtotal | number: 2 }}</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-7 text-right">IVA:</div>
+						<div class="col-xs-5 text-right">${{ totals.iva_amount | number: 2 }}</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-7 text-right">Total:</div>
+						<div class="col-xs-5 text-right">${{ totals.total | number: 2 }}</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

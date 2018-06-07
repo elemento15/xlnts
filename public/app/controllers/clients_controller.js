@@ -1,5 +1,6 @@
-app.controller('ClientsController', function ($scope, $http, $route, $location, $ngConfirm, $uibModal,
-	                                          ClientService, AttributeService, VisitService, toastr) {
+app.controller('ClientsController', function ($scope, $http, $route, $location, $ngConfirm, $uibModal, $timeout,
+	                                          ClientService, AttributeService, VisitService, ProductService,
+	                                          toastr) {
 	this.index = '/clients';
 	this.title = {};
 
@@ -14,9 +15,32 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 		return (invalid) ? false : data;
 	}
 
+	$scope.screen = 'CLIENTS'; // CLIENTS | SALES
+
 	$scope.data = {};
 
 	$scope.dataAttr = [];
+
+	$scope.sale = {
+		comments: '',
+		products: []
+	};
+
+	$scope.totals = {
+		subtotal: 0,
+		iva_amount: 0,
+		total: 0
+	}
+
+	// search product
+	$scope.product = {
+		id: 0,
+		description: '',
+		group: '',
+		quantity: '',
+		price: 0,
+		type: ''
+	};
 
 	$scope.filters = {
 		active: null
@@ -150,9 +174,11 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 		return obj;
 	}
 
-	$scope.$on('$viewContentLoaded', function (view) {
-		$scope.readAttributes();
-	});
+	$scope.setScreen = function (screen) {
+		if ($scope.selectedClient) {
+			$scope.screen = screen;
+		}
+	}
 
 	$scope.selectClient = function (rec) {
 		if (!$scope.selectedClient || $scope.selectedClient.id != rec.id) {
@@ -179,6 +205,138 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 		$scope.selectedClient = null;
 		$scope.visitsList = [];
 	}
+
+	$scope.enterDescription = function (evt) {
+		if (evt.keyCode == 13) {
+			this.searchProduct();
+		}
+	}
+
+	$scope.enterQuantity = function (evt) {
+		if (evt.keyCode == 13) {
+			$('.btnAdd').focus();
+		}
+	}
+
+	$scope.searchProduct = function () {
+		var data = { description: this.product.description };
+		
+		if (! data.description) {
+			return false;
+		}
+
+		ProductService.searchProduct(data)
+			.success(function (response) {
+				if (response.success) {
+					// found one match, set product 
+					if (response.total == 1) {
+						$scope.setProduct(response.product);
+						$scope.focusQuantity();
+
+					} else {
+						$scope.openSearch(data.description);
+					}
+				} else {
+					// TODO: Catch error
+				}
+			}).error(function (response) {
+				toastr.error(response.msg || 'Error en el servidor');
+			});
+	}
+
+	$scope.setProduct = function (product) {
+		$scope.product = {
+			id: product.id,
+			description: product.description,
+			group: product.group.name,
+			quantity: 1,
+			price: product.price,
+			type: product.type
+		};
+	}
+
+	$scope.focusQuantity = function () {
+		$timeout(function () {
+			$('[ng-model="product.quantity"]').select();
+		}, 100);
+	}
+
+	$scope.openSearch = function (search) {
+		var modal = $uibModal.open({
+			ariaLabelledBy: 'modal-title',
+			ariaDescribedBy: 'modal-body',
+			templateUrl: '/partials/_components/modalProducts.html',
+			controller: 'ModalProductsSearch',
+			controllerAs: '$ctrl',
+			resolve: {
+				items: function () {
+					return {
+						search: search || '',
+						type: false // P = Products, S = Services, null/false = All
+					};
+				}
+			}
+		});
+
+		modal.result.then(function (product) {
+			if (product) {
+				$scope.setProduct(product);
+				$scope.focusQuantity();
+			}
+		});
+	}
+
+	$scope.addProduct = function () {
+		var product = $scope.product;
+
+		if (! product.id) {
+			$scope.clearProduct();
+			return false;
+		}
+		
+		// calculate detail total
+		product.total = product.price * product.quantity;
+
+		$scope.sale.products.push(product);
+		$scope.calculateTotals();
+		$scope.clearProduct();
+	}
+
+	$scope.clearProduct = function () {
+		$scope.product = {
+			id: 0,
+			description: '',
+			group: '',
+			quantity: ''
+		};
+
+		$('[ng-model="product.description"]').select();
+	}
+
+	$scope.deleteProduct = function (key) {
+		$scope.sale.products.splice(key, 1);
+		$scope.calculateTotals();
+	}
+
+	$scope.calculateTotals = function () {
+		var subtotal = 0;
+
+		$scope.sale.products.forEach(function(item) {
+			subtotal += item.total;
+		});
+
+		$scope.totals = {
+			subtotal: subtotal,
+			iva_amount: 0,
+			total: subtotal
+		};
+	}
+	
+
+	$scope.$on('$viewContentLoaded', function (view) {
+		$scope.readAttributes();
+	});
+
 
 
 	BaseController.call(this, $scope, $route, $location, $ngConfirm, ClientService, toastr);
