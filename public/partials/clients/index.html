@@ -16,16 +16,19 @@
 				<thead>
 					<tr>
 						<th width="75">Acciones</th>
+						<th width="70" class="text-center">Estado</th>
 						<th>Nombre - Rfc</th>
 						<th>Teléfonos</th>
-						<th width="70" class="text-center">Estado</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr data-ng-repeat="(key, rec) in list" 
-					    ng-click="selectClient(rec)" ng-class="{'cls-selected' : (rec.id == selectedClient.id)}">
+					    ng-click="selectClient(rec)" ng-dblclick="view(rec.id)"
+					    ng-class="{'cls-selected' : (rec.id == selectedClient.id)}">
 						<!-- actions buttons -->
 						<td ng-include="tpls.actions"></td>
+						<!-- change status component -->
+						<td align="center" ng-include="tpls.change_status"></td>
 						<td>
 							<div>{{ rec.name }}</div>
 							<div class="cls-small">{{ rec.rfc }}</div>
@@ -34,8 +37,6 @@
 							<div class="cls-small">{{ rec.phone }}</div>
 							<div class="cls-small">{{ rec.mobile }}</div>
 						</td>
-						<!-- change status component -->
-						<td align="center" ng-include="tpls.change_status"></td>
 					</tr>
 				</tbody>
 			</table>
@@ -51,7 +52,7 @@
 					<button class="btn btn-primary btn-sm" ng-class="{'disabled' : (!selectedClient)}">
 						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Venta
 					</button>
-					<button class="btn btn-info btn-sm" ng-class="{'disabled' : (!selectedClient)}" ng-click="newVisit()">
+					<button class="btn btn-info btn-sm" ng-class="{'disabled' : (!selectedClient)}" ng-click="openVisit()">
 						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Visita
 					</button>
 				</div>
@@ -67,10 +68,12 @@
 				<tbody>
 					<tr data-ng-repeat="(key, rec) in visitsList">
 						<td class="text-center">
-							<span ng-show="rec.visit_type.code == 'VIS'" class="label label-info">
+							<span ng-show="rec.visit_type.code == 'VIS'" ng-click="openVisit(rec)"
+							      class="label label-info cls-pointer" title="Ver Visita">
 								{{ rec.visit_type.name }}
 							</span>
-							<span ng-show="rec.visit_type.code == 'VTA'" class="label label-success">
+							<span ng-show="rec.visit_type.code == 'VTA'" 
+							      class="label label-success cls-pointer" title="Ver Visita">
 								{{ rec.visit_type.name }}
 							</span>
 						</td>

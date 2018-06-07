@@ -57,8 +57,22 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 		});
 	}
 
-	$scope.newVisit = function (product) {
+	$scope.openVisit = function (visit) {
+		var attribute;
 		$scope.dataAttr = [];
+
+		$scope.attributesList.forEach(function (item) {
+			attribute = (visit) ? $scope.getVisitAttribute(item.id, visit.visit_attributes) : {};
+
+			$scope.dataAttr.push({
+				id: attribute.id || 0,
+				attribute_id: item.id,
+				name: item.name,
+				min: item.min,
+				max: item.max,
+				value: parseFloat(attribute.value) || 0
+			});
+		});
 
 		if ($scope.selectedClient) {
 			$scope.modalVisit = $uibModal.open({
@@ -67,8 +81,7 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 				templateUrl: '/partials/clients/modal_visit.html',
 				controller: function ($scope) {
 					$scope.client = $scope.selectedClient;
-					$scope.attributes = $scope.attributesList;
-					$scope.date = new Date();
+					$scope.visit = visit || null;
 				},
 				controllerAs: '$ctrl',
 				scope: $scope
@@ -76,34 +89,27 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 		}
 	}
 
-	$scope.saveVisit = function () {
+	$scope.saveVisit = function (visit) {
+		var value;
 		var success = true;
-		var attrVal;
-		var attrSave = [];
 		var client_id = $scope.selectedClient.id;
 		
 		// validate ranges of attributes
-		$scope.attributesList.forEach(function (item, index) {
-			attrVal = $scope.dataAttr[index];
+		$scope.dataAttr.forEach(function (item, index) {
+			value = parseFloat(item.value);
 
-			if (! attrVal || attrVal < item.min || attrVal > item.max) {
+			if (! value || value < parseFloat(item.min) || value > parseFloat(item.max)) {
 				success = false;
 				toastr.warning('El valor de '+ item.name +' debe ser entre '+ item.min +' y '+ item.max);
 			}
-			
-			// create the attribute values to save
-			attrSave.push({
-				id: item.id,
-				name: item.name,
-				value: attrVal
-			});
 		});
 
 		if (success) {
 			var data = {
+				id: (visit) ? visit.id : 0,
 				client_id: client_id,
 				type: 'VIS',
-				visitAttributes: attrSave
+				visit_attributes: $scope.dataAttr
 			};
 
 			VisitService.save(data)
@@ -115,8 +121,7 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 					$scope.readVisits(client_id);
 				})
 				.error(function(response) {
-					console.log(response);
-					// TODO: Catch errors
+					toastr.error(response.msg || 'Error en el servidor');
 				});
 		}
 	}
@@ -130,13 +135,30 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 			});
 	}
 
+	$scope.getVisitAttribute = function (id, attributes) {
+		var obj = {};
+
+		attributes.forEach(function (item) {
+			if (item.attribute_id == id) {
+				obj = {
+					id: item.id,
+					value: item.value
+				};
+			}
+		});
+
+		return obj;
+	}
+
 	$scope.$on('$viewContentLoaded', function (view) {
 		$scope.readAttributes();
 	});
 
 	$scope.selectClient = function (rec) {
-		$scope.selectedClient = rec;
-		$scope.readVisits(rec.id);
+		if (!$scope.selectedClient || $scope.selectedClient.id != rec.id) {
+			$scope.selectedClient = rec;
+			$scope.readVisits(rec.id);
+		}
 	}
 
 	$scope.readVisits = function (client_id) {

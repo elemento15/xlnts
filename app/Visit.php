@@ -25,7 +25,7 @@ class Visit extends Model
         return $this->belongsTo('App\Client');
     }
 
-    public function visitAttributes()
+    public function visit_attributes()
     {
         return $this->hasMany('App\VisitAttribute');
     }

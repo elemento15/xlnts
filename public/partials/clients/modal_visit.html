@@ -1,5 +1,6 @@
 <div class="modal-header">
-    <h4 class="modal-title" id="modal-title">Agregar Visita</h4>
+    <h4 ng-show="visit" class="modal-title" id="modal-title">Ver Visita</h4>
+    <h4 ng-hide="visit" class="modal-title" id="modal-title">Agregar Visita</h4>
 </div>
 <div class="modal-body" id="modal-body">
     <div class="row text-primary" style="margin-bottom: 15px;">
@@ -7,22 +8,22 @@
             Cliente: <b>{{ client.name }}</b>
         </div>
         <div class="col-sm-4">
-            <div class="pull-right">{{ date.toISOString().substr(0,10) }}</div>
+            <div ng-show="visit" class="pull-right">{{ visit.visit_date }}</div>
         </div>
     </div>
 
     <div class="form-horizontal">
 
-        <div class="form-group" data-ng-repeat="(key, attr) in attributes">
+        <div class="form-group" data-ng-repeat="(key, attr) in $parent.dataAttr">
             <label class="col-sm-2 control-label">{{ attr.name }}:</label>
             <div class="col-sm-4">
-                <input type="number" class="form-control" ng-model="$parent.dataAttr[key]"
+                <input type="number" class="form-control" ng-model="$parent.dataAttr[key].value"
                        title="Min: {{ attr.min }} | Max: {{ attr.max }}">
             </div>
         </div>
     </div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="$parent.saveVisit()">Guardar</button>
+    <button class="btn btn-primary" type="button" ng-click="$parent.saveVisit(visit)">Guardar</button>
     <button class="btn btn-default" type="button" ng-click="$dismiss()">Cerrar</button>
 </div>
