@@ -19,4 +19,10 @@ class MovementConcept extends Model
     {
         return $this->hasMany('App\Movements');
     }
+
+    public static function findByCode($code)
+    {
+        $concept = self::where('code', $code)->first();
+        return ($concept) ? $concept : false;
+    }
 }

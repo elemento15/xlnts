@@ -24,4 +24,20 @@ class Movement extends Model
     {
         return $this->hasMany('App\MovementProduct');
     }
+
+    public function updateStock()
+    {
+        foreach ($this->products as $key => $item) {
+            $item->product->updateStock($this->type, $item->quantity);
+        }
+    }
+
+    public function reverseStock()
+    {
+        $type = ($this->type == 'E') ? 'S' : 'E';
+
+        foreach ($this->products as $key => $item) {
+            $item->product->updateStock($type, $item->quantity);
+        }
+    }
 }

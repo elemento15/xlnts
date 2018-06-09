@@ -229,3 +229,21 @@ input.cls-input-small { width: 90px !important; }
 .cls-sales-totals > div:last-child {
 	font-size: 18px;
 }
+
+.cls-switch {
+	border: 1px solid #bbb;
+	border-radius: 3px;
+	padding: 2px;
+	margin-top: 8px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.cls-switch-no {
+	background-color: #d0d0d0;
+}
+
+.cls-switch-yes {
+	color: #fff;
+	background-color: #5cb85c;
+}

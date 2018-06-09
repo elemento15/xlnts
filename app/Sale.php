@@ -12,12 +12,17 @@ class Sale extends Model
      * @var array
      */
     protected $fillable = [
-        'client_id', 'has_invoice', 'comments'
+        'sale_date' ,'client_id', 'has_invoice', 'iva_percent', 'comments'
     ];
 
 
     public function client()
     {
         return $this->belongsTo('App\Client');
+    }
+
+    public function sale_products()
+    {
+        return $this->hasMany('App\SaleProduct');
     }
 }

@@ -34,14 +34,16 @@ class Product extends Model
     {
         $quantity = ($type == 'E') ? $quantity : ($quantity * -1);
 
-        if ($stock = Stock::findByProduct($this->id)) {
-            $stock->quantity += $quantity;
-            $stock->save();
-        } else {
-            Stock::create([
-                'product_id' => $this->id,
-                'quantity' => $quantity
-            ]);
+        if ($this->type == 'P') {
+            if ($stock = Stock::findByProduct($this->id)) {
+                $stock->quantity += $quantity;
+                $stock->save();
+            } else {
+                Stock::create([
+                    'product_id' => $this->id,
+                    'quantity' => $quantity
+                ]);
+            }
         }
     }
 }

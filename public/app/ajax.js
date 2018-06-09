@@ -186,3 +186,20 @@ app.factory('VisitService', ['$http', function($http) {
 		}
 	}
 }]);
+
+app.factory('SaleService', ['$http', function($http) {
+	return {
+		get      : function (data) {
+			return $http.get('sales/'+ data.id);
+		},
+		save     : function (data) {
+			return (data.id) ? $http.patch('sales/'+ data.id, data) : $http.post('sales', data);
+		},
+		read     : function(data) {
+			return $http.get('sales?'+ jQuery.param(data), data);
+		},
+		delete   : function(data) {
+			return $http.delete('sales/'+ data.id);
+		}
+	}
+}]);

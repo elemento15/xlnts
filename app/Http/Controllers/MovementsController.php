@@ -55,7 +55,7 @@ class MovementsController extends BaseController
             try {
                 // save movement
                 $movement = $mainModel::create([
-                    'mov_date' => date('Y-m-d h:i:s'),
+                    'mov_date' => date('Y-m-d H:i:s'),
                     'movement_concept_id' => $request->movement_concept_id,
                     'type' => $request->type,
                     'active' => 1,
@@ -69,10 +69,10 @@ class MovementsController extends BaseController
                         'product_id' => $product['id'],
                         'quantity' => $product['quantity']
                     ]);
-
-                    // updates stock
-                    $movProd->product->updateStock($request->type, $product['quantity']);
                 }
+
+                // update stock
+                $movement->updateStock();
 
                 return $movement;
             } catch (Exception $e) {
@@ -100,18 +100,17 @@ class MovementsController extends BaseController
             return Response::json(array('msg' => 'Movimiento ya esta cancelado'), 500);
         }
 
+        if ($record->movement_concept->is_auto) {
+            return Response::json(array('msg' => 'Movimiento generado automaticamente'), 500);
+        }
+
         DB::beginTransaction();
 
         $record->active = 0;
         $record->cancel_date = date('Y-m-d H:i:s');
         
         if ($record->save()) {
-            // update product's stock 
-            $type = ($record->type == 'E') ? 'S' : 'E';
-
-            $record->products->each(function($item) use ($type) {
-                $item->product->updateStock($type, $item->quantity);
-            });
+            $record->reverseStock();
 
             DB::commit();
 

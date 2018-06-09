@@ -61,7 +61,7 @@ class VisitsController extends BaseController
 
                 // save visit
                 $visit = $mainModel::create([
-                    'visit_date' => date('Y-m-d h:i:s'),
+                    'visit_date' => date('Y-m-d H:i:s'),
                     'visit_type_id' => $type->id,
                     'client_id' => $request->client_id
                 ]);

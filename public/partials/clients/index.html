@@ -51,7 +51,7 @@
 		<div class="col-sm-5">
 			<div class="row cls-toolbar">
 				<div class="col-sm-12">
-					<button ng-click="setScreen('SALES')" class="btn btn-primary btn-sm" 
+					<button ng-click="showSale()" class="btn btn-primary btn-sm" 
 					        ng-class="{'disabled' : (!selectedClient)}">
 						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Venta
 					</button>
@@ -117,7 +117,7 @@
 
 			<!-- Product search form -->
 			<div class="row form-inline form-group-sm"><!-- ng-if="isNew()" -->
-				<div class="col-sm-12 cls-form-detail">
+				<div class="col-sm-8 cls-form-detail">
 					<input type="text" ng-model="product.description" class="form-control cls-input-large" 
 					       placeholder="Descripción" ng-keyup="enterDescription($event)">
 					<input type="number" ng-model="product.quantity" class="form-control cls-input-small text-right" 
@@ -131,6 +131,10 @@
 					<button class="btn btn-xs btn-default btnClear" title="Limpiar" ng-click="clearProduct()">
 						<span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
 					</button>
+				</div>
+				<div class="col-sm-4">
+					<div class="cls-switch cls-switch-no" ng-show="sale.has_invoice == 0" ng-click="setInvoice(1)">No requiere factura</div>
+					<div class="cls-switch cls-switch-yes" ng-show="sale.has_invoice == 1" ng-click="setInvoice(0)">Si requiere factura</div>
 				</div>
 			</div>
 
@@ -192,8 +196,8 @@
 			<div class="row">
 				<!-- action buttons for sale screen -->
 				<div class="col-xs-8">
-					<button class="btn btn-primary" title="Guardado aun no Implementado">*Guardar</button>
-					<button class="btn btn-warning" ng-click="setScreen('CLIENTS')">Cerrar</button>
+					<button class="btn btn-primary" ng-click="saveSale()">Guardar</button>
+					<button class="btn btn-warning" ng-click="closeSale()">Cerrar</button>
 				</div>
 
 				<!-- total labels -->

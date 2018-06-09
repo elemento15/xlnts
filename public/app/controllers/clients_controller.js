@@ -1,6 +1,6 @@
 app.controller('ClientsController', function ($scope, $http, $route, $location, $ngConfirm, $uibModal, $timeout,
 	                                          ClientService, AttributeService, VisitService, ProductService,
-	                                          toastr) {
+	                                          SaleService, toastr) {
 	this.index = '/clients';
 	this.title = {};
 
@@ -22,6 +22,10 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 	$scope.dataAttr = [];
 
 	$scope.sale = {
+		id: 0,
+		client_id: 0,
+		iva_percent: 16, // TODO: Get IVA from configurations
+		has_invoice: 0,
 		comments: '',
 		products: []
 	};
@@ -181,12 +185,6 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 		return obj;
 	}
 
-	$scope.setScreen = function (screen) {
-		if ($scope.selectedClient) {
-			$scope.screen = screen;
-		}
-	}
-
 	$scope.selectClient = function (rec) {
 		if (!$scope.selectedClient || $scope.selectedClient.id != rec.id) {
 			$scope.selectedClient = rec;
@@ -211,6 +209,34 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 	$scope.afterRead = function () {
 		$scope.selectedClient = null;
 		$scope.visitsList = [];
+	}
+
+	$scope.clearSale = function () {
+		$scope.sale = {
+			id: 0,
+			client_id: 0,
+			iva_percent: 16, // TODO: Get IVA from configurations
+			has_invoice: 0,
+			comments: '',
+			products: []
+		};
+	}
+
+	$scope.showSale = function () {
+		if ($scope.selectedClient) {
+			$scope.sale.client_id = $scope.selectedClient.id;
+			$scope.screen = 'SALES';
+		}
+	}
+
+	$scope.closeSale = function() {
+		$scope.clearSale();
+		$scope.screen = 'CLIENTS';
+	}
+
+	$scope.setInvoice = function (opt) {
+		$scope.sale.has_invoice = opt;
+		$scope.calculateTotals();
 	}
 
 	$scope.enterDescription = function (evt) {
@@ -371,16 +397,21 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 	}
 
 	$scope.calculateTotals = function () {
+		var sale = $scope.sale;
 		var subtotal = 0;
+		var iva_amount = 0;
 
-		$scope.sale.products.forEach(function(item) {
+		sale.products.forEach(function(item) {
 			subtotal += item.total;
 		});
 
+		// set iva_amount if sale has_invoice
+		iva_amount = (sale.has_invoice) ? subtotal * (sale.iva_percent / 100) : 0;
+
 		$scope.totals = {
 			subtotal: subtotal,
-			iva_amount: 0,
-			total: subtotal
+			iva_amount: iva_amount,
+			total: subtotal + iva_amount
 		};
 	}
 
@@ -414,6 +445,18 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 			controllerAs: '$ctrl',
 			scope: $scope
 		});
+	}
+
+	$scope.saveSale = function () {
+		SaleService.save($scope.sale)
+			.success(function(response) {
+				toastr.success('Venta Guardada');
+				$scope.closeSale();
+				$scope.readVisits($scope.selectedClient.id);
+			})
+			.error(function(response) {
+				toastr.error(response.msg || 'Error en el servidor');
+			});
 	}
 	
 
