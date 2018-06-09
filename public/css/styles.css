@@ -220,3 +220,12 @@ ul.pagination li span:hover {
 input.cls-input-large { width: 250px !important; }
 input.cls-input-medium { width: 150px !important; }
 input.cls-input-small { width: 90px !important; }
+
+.cls-sales-totals > div {
+	font-size: 15px;
+	font-weight: bold;
+}
+
+.cls-sales-totals > div:last-child {
+	font-size: 18px;
+}

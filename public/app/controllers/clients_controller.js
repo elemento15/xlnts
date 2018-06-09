@@ -39,7 +39,9 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 		group: '',
 		quantity: '',
 		price: 0,
-		type: ''
+		total: 0,
+		type: '',
+		attributes: null
 	};
 
 	$scope.filters = {
@@ -50,6 +52,11 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 
 	$scope.attributesList = [];
 	$scope.visitsList = [];
+
+	// property when editing the product in list
+	$scope.editing = {
+		quantity: null
+	};
 
 
 	$scope.clearModel = function () {
@@ -251,7 +258,8 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 			group: product.group.name,
 			quantity: 1,
 			price: product.price,
-			type: product.type
+			type: product.type,
+			attributes: product.attributes
 		};
 	}
 
@@ -318,6 +326,50 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 		$scope.calculateTotals();
 	}
 
+	$scope.showDetailQuantity = function (product) {
+		// if (!$scope.isNew()) return false;
+
+		$scope.editing.quantity = product.quantity;
+		product._editing = true;
+
+		// set focus
+		$timeout(function () {
+			$("#productsList input[ng-model='editing.quantity']").select();
+		}, 100);
+	}
+
+	$scope.keyUpDetailQuantity = function (evt, product) {
+		var code = evt.keyCode;
+		var editing = $scope.editing.quantity;
+
+		if (code == 27) { // escape
+			$scope.editing.quantity = 0;
+			product._editing = false;
+		}
+
+		if (code == 13) { // enter
+			if (! isNaN(editing) && editing > 0 && editing < 500000) {
+				product.quantity = editing;
+				product.total = product.quantity * product.price;
+			}
+			product._editing = false;
+		}
+
+		$scope.calculateTotals();
+	}
+
+	$scope.blurQuantityDetail = function (product) {
+		var editing = $scope.editing.quantity;
+
+		if (! isNaN(editing) && editing > 0 && editing < 500000) {
+			product.quantity = editing;
+			product.total = product.quantity * product.price;
+		}
+
+		product._editing = false;
+		$scope.calculateTotals();
+	}
+
 	$scope.calculateTotals = function () {
 		var subtotal = 0;
 
@@ -330,6 +382,38 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 			iva_amount: 0,
 			total: subtotal
 		};
+	}
+
+	$scope.showProductAttrLabel = function (attributes) {
+		var label = 'NO';
+		var checked = 0;
+		var assigned = 0;
+
+		attributes.forEach(function(item) {
+			checked  += (item.checked) ? 1 : 0;
+			assigned += (item.value) ? 1 : 0; 
+		});
+
+		if (checked > 0) {
+			label = (assigned < checked) ? 'PEND' : 'OK';
+		}
+
+		return label;
+	}
+
+	$scope.showAttributesForm = function (product) {
+		console.log(product); // TODO: console
+
+		$scope.modalVisit = $uibModal.open({
+			ariaLabelledBy: 'modal-title',
+			ariaDescribedBy: 'modal-body',
+			templateUrl: '/partials/clients/modal_attributes.html',
+			controller: function ($scope) {
+				$scope.product = product;
+			},
+			controllerAs: '$ctrl',
+			scope: $scope
+		});
 	}
 	
 

@@ -18,7 +18,7 @@ class ProductsController extends BaseController
     protected $orderBy = ['field' => 'description', 'type' => 'ASC'];
     
     // params needer for show
-    protected $showJoins = ['group','stock'];
+    protected $showJoins = ['group','attributes','stock'];
 
     // params needed for store/update
     // protected $saveFields = ['description','type','group_id','price','has_attributes','comments'];
@@ -67,7 +67,7 @@ class ProductsController extends BaseController
             $product = $product->where('type', $request->type);
         }
 
-        $product = $product->with('group');
+        $product = $product->with('group')->with('attributes')->with('attributes.attribute');
                         
         $count = $product->count();
 

@@ -1,0 +1,29 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-title">Atributos del Producto</h4>
+</div>
+<div class="modal-body" id="modal-body">
+    <div class="row text-primary" style="margin-bottom: 15px;">
+        <div class="col-sm-8">
+            Producto: <b>{{ product.description }}</b>
+        </div>
+        <div class="col-sm-4">
+            <div class="">${{ product.price | number: 2 }}</div>
+        </div>
+    </div>
+
+    <div class="form-horizontal">
+        <div class="form-group" data-ng-repeat="(key, attr) in product.attributes">
+            <div ng-show="attr.checked">
+                <label class="col-sm-2 control-label">{{ attr.attribute.name }}:</label>
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" ng-model=""
+                           title="Min: {{ attr.attribute.min }} | Max: {{ attr.attribute.max }}">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="$parent.saveAttributes()">Guardar</button>
+    <button class="btn btn-default" type="button" ng-click="$dismiss()">Cerrar</button>
+</div>

@@ -142,10 +142,12 @@
 							<tr>
 								<th width="50" class="text-center">&nbsp;</th>
 								<th>Descripción</th>
+								<th>Grupo</th>
 								<th width="75" class="text-center">Tipo</th>
 								<th width="80" class="text-center">Cantidad</th>
 								<th width="90" class="text-center">Precio</th>
 								<th width="90" class="text-center">Total</th>
+								<th width="70" class="text-center">Atributos</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -157,6 +159,8 @@
 								</td>
 								<td>
 									<div>{{ item.description || item.product.description }}</div>
+								</td>
+								<td>
 									<div class="cls-small">{{ item.group || item.product.group.name }}</div>
 								</td>
 								<td>
@@ -171,6 +175,14 @@
 								</td>
 								<td class="text-right">${{ item.price | number:2 }}</td>
 								<td class="text-right">${{ item.total | number:2 }}</td>
+								<td class="text-center">
+									<span class="label label-default" 
+									      ng-show="showProductAttrLabel(item.attributes) == 'NO'">No</span>
+									<span class="label label-warning cls-pointer" ng-click="showAttributesForm(item)"
+									      ng-show="showProductAttrLabel(item.attributes) == 'PEND'">Ver</span>
+									<span class="label label-success cls-pointer" ng-click="showAttributesForm(item)"
+									      ng-show="showProductAttrLabel(item.attributes) == 'OK'">Ver</span>
+								</td>
 							</tr>
 						</tbody>
 					</table>
@@ -178,20 +190,23 @@
 			</div>
 
 			<div class="row">
+				<!-- action buttons for sale screen -->
 				<div class="col-xs-8">
 					<button class="btn btn-primary" title="Guardado aun no Implementado">*Guardar</button>
 					<button class="btn btn-warning" ng-click="setScreen('CLIENTS')">Cerrar</button>
 				</div>
-				<div class="col-xs-4">
-					<div class="row">
+
+				<!-- total labels -->
+				<div class="col-xs-4 cls-sales-totals">
+					<div class="row text-muted">
 						<div class="col-xs-7 text-right">Subtotal:</div>
 						<div class="col-xs-5 text-right">${{ totals.subtotal | number: 2 }}</div>
 					</div>
-					<div class="row">
+					<div class="row text-muted">
 						<div class="col-xs-7 text-right">IVA:</div>
 						<div class="col-xs-5 text-right">${{ totals.iva_amount | number: 2 }}</div>
 					</div>
-					<div class="row">
+					<div class="row text-danger">
 						<div class="col-xs-7 text-right">Total:</div>
 						<div class="col-xs-5 text-right">${{ totals.total | number: 2 }}</div>
 					</div>
