@@ -23,8 +23,9 @@
 					<tr>
 						<th width="75">Acciones</th>
 						<th class="text-center" width="100">Fecha</th>
-						<th class="text-center" width="80">Tipo</th>
 						<th>Concepto</th>
+						<th width="120" class="text-center">Tipo</th>
+						<th width="100" class="text-center">Auto/Man</th>
 						<th width="100" class="text-center">Estado</th>
 					</tr>
 				</thead>
@@ -36,18 +37,24 @@
 								<button class="btn btn-info btn-xs" ng-click="view(rec.id)">
 									<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
 								</button>
-								<button class="btn btn-danger btn-xs" ng-click="cancel(rec.id)">
+								<button class="btn btn-danger btn-xs" ng-click="cancel(rec.id)" 
+								        ng-hide="rec.movement_concept.is_auto">
 									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 								</button>
 							</div>
 						</td>
 						<td class="text-center">{{ rec.mov_date.substr(0, 10) }}</td>
-						<td class="text-center">
-							<span ng-show="rec.type == 'E'" class="label label-info">Entrada</span>
-							<span ng-show="rec.type == 'S'" class="label label-light">Salida</span>
-						</td>
 						<td>{{ rec.movement_concept.name }}</td>
-						
+						<td class="text-center">
+							<span class="text-primary" ng-show="rec.type == 'E'">ENTRADA</span>
+							<span class="text-danger" ng-show="rec.type == 'S'">SALIDA</span>
+							<!--<span ng-show="rec.type == 'E'" class="label label-info">Entrada</span>
+							<span ng-show="rec.type == 'S'" class="label label-light">Salida</span>-->
+						</td>
+						<td class="text-center">
+							<span ng-show="rec.movement_concept.is_auto" class="label label-info">Automático</span>
+							<span ng-hide="rec.movement_concept.is_auto" class="label label-default">Manual</span>
+						</td>
 						<td align="center">
 							<div>
 								<span class="label label-default" ng-show="rec.active">Activo</span>
