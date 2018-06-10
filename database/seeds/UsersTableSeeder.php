@@ -15,10 +15,10 @@ class UsersTableSeeder extends Seeder
     {
         $users = [
         	[
-        		'name' => 'Raul Garcia',
-        		'email' => 'raul@example.com',
+        		'name' => 'Administrador',
+        		'email' => 'admin@example.com',
         		'role_id' => Role::getIdByCode('ADM'),
-        		'password' => bcrypt('administrator'),
+        		'password' => bcrypt('sysadministrator'),
         		'active' => true
         	],[
                 'name' => 'Juan Perez',

@@ -32,8 +32,10 @@ app.controller('AttributesController', function ($scope, $http, $route, $locatio
 	$scope.data = {
 		id:  0,
 		name: '',
+		description: '',
 		min: 0,
-		max: 0
+		max: 0,
+		steps: 0
 	};
 
 	$scope.filters = {

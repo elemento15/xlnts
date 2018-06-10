@@ -9,7 +9,7 @@ class AttributesController extends BaseController
     protected $mainModel = 'App\Attribute';
 
     // params needen for index
-    protected $searchFields = ['name'];
+    protected $searchFields = ['name','description'];
     protected $indexPaginate = 10;
     protected $indexJoins = [];
     protected $orderBy = ['field' => 'name', 'type' => 'ASC'];
@@ -18,12 +18,15 @@ class AttributesController extends BaseController
     protected $showJoins = [];
 
     // params needed for store/update
-    protected $saveFields = ['name','min','max'];
+    protected $saveFields = ['name','min','max','steps','description'];
     // - protected $storeFields = [];
     // - protected $updateFields = [];
     protected $defaultNulls = [];
     protected $formRules = [
-        'name' => 'required'
+        'name' => 'required',
+        'min' => 'required',
+        'max' => 'required',
+        'steps' => 'required'
     ];
 
     protected $allowDelete = true;

@@ -22,19 +22,24 @@
 				<thead>
 					<tr>
 						<th width="75">Acciones</th>
-						<th>Nombre</th>
-						<th>Mínimo</th>
-						<th>Máximo</th>
+						<th>Nombre/Descripción</th>
+						<th class="text-center">Mínimo</th>
+						<th class="text-center">Máximo</th>
+						<th class="text-center">Pasos</th>
 						<th width="100" class="text-center">Estado</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr data-ng-repeat="(key, rec) in list">
+					<tr data-ng-repeat="(key, rec) in list" ng-dblclick="view(rec.id)">
 						<!-- actions buttons -->
 						<td ng-include="tpls.actions"></td>
-						<td>{{ rec.name }}</td>
-						<td>{{ rec.min }}</td>
-						<td>{{ rec.max }}</td>
+						<td>
+							<div>{{ rec.name }}</div>
+							<div class="cls-xsmall"><i>{{ rec.description }}</i></div>
+						</td>
+						<td class="text-right">{{ rec.min }}</td>
+						<td class="text-right">{{ rec.max }}</td>
+						<td class="text-right">{{ rec.steps }}</td>
 						<!-- change status component -->
 						<td align="center" ng-include="tpls.change_status"></td>
 					</tr>
