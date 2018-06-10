@@ -27,7 +27,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr data-ng-repeat="(key, rec) in list">
+					<tr data-ng-repeat="(key, rec) in list" ng-dblclick="view(rec.id)">
 						<!-- actions buttons -->
 						<td ng-include="tpls.actions"></td>
 						<td>{{ rec.name }}</td>
