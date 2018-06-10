@@ -100,6 +100,8 @@ app.controller('ProductsController', function ($scope, $http, $route, $location,
 				name: item.name,
 				min: item.min,
 				max: item.max,
+				steps: item.steps,
+				description: item.description,
 				checked: $scope.getCheckedAttr(item.id, $scope.data.attributes)
 			});
 		});

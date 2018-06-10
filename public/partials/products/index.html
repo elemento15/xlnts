@@ -168,21 +168,20 @@
 						<p class="cls-small">Seleccione los atributos del producto actual</p>
 
 						<div class="row">
-							<div class="col-sm-8 col-sm-offset-2">
-								<table class="table table-sm table-condensed">
-									<tbody>
-										<tr ng-repeat="attr in attributesProducts">
-											<td width="80">
-												<button class="btn btn-xs btn-success" ng-show="attr.checked" ng-click="changeAttrSelection(attr)"> {{ attr.name }} </button>
-												<button class="btn btn-xs btn-info" ng-hide="attr.checked" ng-click="changeAttrSelection(attr)"> {{ attr.name }} </button>
-											</td>
-											<td class="text-primary" title="Minimo - Máximo">
-												{{ attr.min }} - {{ attr.max }}
-											</td>
-										</tr>
-									</tbody>
-								</table>
+							<div class="col-xs-3">&nbsp;</div>
+							<div class="col-xs-5"><b>Rango</b></div>
+							<div class="col-xs-4"><b>Pasos</b></div>
+						</div>
+
+						<div class="row" ng-repeat="attr in attributesProducts">
+							<div class="col-xs-3">
+								<button class="btn btn-xs btn-block btn-success" title="{{ attr.description }}"
+								        ng-show="attr.checked" ng-click="changeAttrSelection(attr)"> {{ attr.name }} </button>
+								<button class="btn btn-xs btn-block btn-info" title="{{ attr.description }}"
+								        ng-hide="attr.checked" ng-click="changeAttrSelection(attr)"> {{ attr.name }} </button>
 							</div>
+							<div class="col-xs-5" style="margin-top: 5px;">{{ attr.min }} / {{ attr.max }}</div>
+							<div class="col-xs-4" style="margin-top: 5px;">{{ attr.steps }}</div>
 						</div>
 					</div>
 

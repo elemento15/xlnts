@@ -131,6 +131,10 @@ ul.pagination li span:hover {
 	border-color: #a9a9a9;
 }
 
+.btn-block {
+	margin-top: 5px;
+}
+
 .cls-pointer {
 	cursor: pointer;
 }
@@ -190,20 +194,6 @@ ul.pagination li span:hover {
 
 .cls-list-requirements {
 	background-color: #fff;
-}
-
-.cls-project-amount {
-	font-size: 22px;
-	color: #da0202;
-}
-
-.cls-project-inactive {
-	font-size: 18px;
-	color: #da0202;
-	font-weight: bold;
-	float: right;
-	margin-top: -38px;
-	margin-right: 30px;
 }
 
 .cls-side-form {
