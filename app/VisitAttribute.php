@@ -12,7 +12,7 @@ class VisitAttribute extends Model
      * @var array
      */
     protected $fillable = [
-        'visit_id', 'type', 'attribute_id', 'value'
+        'visit_id','attribute_id','left_value','right_value'
     ];
 
     public $timestamps = false;

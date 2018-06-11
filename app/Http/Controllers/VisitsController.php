@@ -33,7 +33,7 @@ class VisitsController extends BaseController
     ];
 
     protected $allowDelete = false;
-    protected $allowUpdate = true;
+    protected $allowUpdate = false;
     protected $allowStore  = true;
     protected $except = [];
 
@@ -70,9 +70,9 @@ class VisitsController extends BaseController
                 foreach ($request->visit_attributes as $attr) {
                     VisitAttribute::create([
                         'visit_id'     => $visit->id,
-                        'type'         => 'L',
                         'attribute_id' => $attr['attribute_id'],
-                        'value'        => $attr['value']
+                        'left_value'   => $attr['left_value'],
+                        'right_value'  => $attr['right_value']
                     ]);
                 }
 

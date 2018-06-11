@@ -93,19 +93,22 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 	}
 
 	$scope.openVisit = function (visit) {
-		var attribute;
+		var attributes;
 		$scope.dataAttr = [];
 
 		$scope.attributesList.forEach(function (item) {
-			attribute = (visit) ? $scope.getVisitAttribute(item.id, visit.visit_attributes) : {};
+			attributes = (visit) ? $scope.getVisitAttributes(item.id, visit.visit_attributes) : {};
 
 			$scope.dataAttr.push({
-				id: attribute.id || 0,
+				id: attributes.id || 0,
 				attribute_id: item.id,
 				name: item.name,
 				min: item.min,
 				max: item.max,
-				value: parseFloat(attribute.value) || 0
+				steps: item.steps,
+				description: item.description,
+				left_value: parseFloat(attributes.left_value) || 0,
+				right_value: parseFloat(attributes.right_value) || 0
 			});
 		});
 
@@ -125,17 +128,23 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 	}
 
 	$scope.saveVisit = function (visit) {
-		var value;
+		var left_value, right_value;
 		var success = true;
 		var client_id = $scope.selectedClient.id;
 		
 		// validate ranges of attributes
 		$scope.dataAttr.forEach(function (item, index) {
-			value = parseFloat(item.value);
+			left_value = parseFloat(item.left_value);
+			right_value = parseFloat(item.right_value);
 
-			if (! value || value < parseFloat(item.min) || value > parseFloat(item.max)) {
+			if (left_value < parseFloat(item.min) || left_value > parseFloat(item.max)) {
 				success = false;
-				toastr.warning('El valor de '+ item.name +' debe ser entre '+ item.min +' y '+ item.max);
+				toastr.warning('El valor de ojo izq. de '+ item.name +' debe ser entre '+ item.min +' y '+ item.max);
+			}
+
+			if (right_value < parseFloat(item.min) || right_value > parseFloat(item.max)) {
+				success = false;
+				toastr.warning('El valor de ojo der. de '+ item.name +' debe ser entre '+ item.min +' y '+ item.max);
 			}
 		});
 
@@ -170,14 +179,15 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 			});
 	}
 
-	$scope.getVisitAttribute = function (id, attributes) {
+	$scope.getVisitAttributes = function (id, attributes) {
 		var obj = {};
 
 		attributes.forEach(function (item) {
 			if (item.attribute_id == id) {
 				obj = {
 					id: item.id,
-					value: item.value
+					left_value: item.left_value,
+					right_value: item.right_value
 				};
 			}
 		});
