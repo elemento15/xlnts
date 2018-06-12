@@ -137,14 +137,22 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 			left_value = parseFloat(item.left_value);
 			right_value = parseFloat(item.right_value);
 
+			// validations for left eye
 			if (left_value < parseFloat(item.min) || left_value > parseFloat(item.max)) {
 				success = false;
-				toastr.warning('El valor de ojo izq. de '+ item.name +' debe ser entre '+ item.min +' y '+ item.max);
+				toastr.warning(item.name +' de OJO IZQ. debe ser entre '+ item.min +' y '+ item.max);
+			} else if (left_value % parseFloat(item.steps) != 0) {
+				success = false;
+				toastr.warning(item.name +' de OJO IZQ. debe ser multiplo de '+ item.steps);
 			}
 
+			// validations for right_eye
 			if (right_value < parseFloat(item.min) || right_value > parseFloat(item.max)) {
 				success = false;
-				toastr.warning('El valor de ojo der. de '+ item.name +' debe ser entre '+ item.min +' y '+ item.max);
+				toastr.warning(item.name +' de OJO DER. debe ser entre '+ item.min +' y '+ item.max);
+			} else if (right_value % parseFloat(item.steps) != 0) {
+				success = false;
+				toastr.warning(item.name +' de OJO DER. debe ser multiplo de '+ item.steps);
 			}
 		});
 
@@ -341,6 +349,12 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 		// calculate detail total
 		product.total = product.price * product.quantity;
 
+		// initialize left and right values for attributes
+		product.attributes.forEach(function(item) {
+			item.left_value = 0;
+			item.right_value = 0;
+		});
+
 		$scope.sale.products.push(product);
 		$scope.calculateTotals();
 		$scope.clearProduct();
@@ -427,24 +441,42 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 
 	$scope.showProductAttrLabel = function (attributes) {
 		var label = 'NO';
-		var checked = 0;
-		var assigned = 0;
+		var validation = $scope.validateProductAttributes(attributes);
 
-		attributes.forEach(function(item) {
-			checked  += (item.checked) ? 1 : 0;
-			assigned += (item.value) ? 1 : 0; 
-		});
-
-		if (checked > 0) {
-			label = (assigned < checked) ? 'PEND' : 'OK';
+		if (validation.checked > 0) {
+			label = (validation.invalid > 0) ? 'PEND' : 'OK';
 		}
 
 		return label;
 	}
 
-	$scope.showAttributesForm = function (product) {
-		console.log(product); // TODO: console
+	$scope.validateProductAttributes = function (attributes) {
+		var checked = 0;
+		var invalid = 0;
 
+		attributes.forEach(function (item) {
+			if (item.checked) {
+				var attr = item.attribute;
+				checked++;
+				item.left_invalid = false;
+				item.right_invalid = false;
+
+				if (item.left_value < attr.min || item.left_value > attr.max || item.left_value % attr.steps != 0) {
+					invalid++;
+					item.left_invalid = true;
+				}
+
+				if (item.right_value < attr.min || item.right_value > attr.max || item.right_value % attr.steps != 0) {
+					invalid++;
+					item.right_invalid = true;
+				}
+			}
+		});
+
+		return { checked: checked, invalid: invalid };
+	}
+
+	$scope.showAttributesForm = function (product) {
 		$scope.modalVisit = $uibModal.open({
 			ariaLabelledBy: 'modal-title',
 			ariaDescribedBy: 'modal-body',
@@ -458,15 +490,27 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 	}
 
 	$scope.saveSale = function () {
-		SaleService.save($scope.sale)
-			.success(function(response) {
-				toastr.success('Venta Guardada');
-				$scope.closeSale();
-				$scope.readVisits($scope.selectedClient.id);
-			})
-			.error(function(response) {
-				toastr.error(response.msg || 'Error en el servidor');
-			});
+		var invalid = 0;
+		
+		$scope.sale.products.forEach(function (product) {
+			var validate = $scope.validateProductAttributes(product.attributes);
+			invalid += validate.invalid;
+		});
+
+		if (! invalid) {
+			SaleService.save($scope.sale)
+				.success(function(response) {
+					toastr.success('Venta Guardada');
+					$scope.closeSale();
+					$scope.readVisits($scope.selectedClient.id);
+				})
+				.error(function(response) {
+					toastr.error(response.msg || 'Error en el servidor');
+				});
+		} else {
+			toastr.warning('Hay atributos invalidos en los productos');
+		}
+
 	}
 	
 

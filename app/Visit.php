@@ -29,4 +29,11 @@ class Visit extends Model
     {
         return $this->hasMany('App\VisitAttribute');
     }
+
+    public function sale()
+    {
+        return $this->belongsTo('App\Sale');
+    }
+
+
 }

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use App\Product;
 use App\SaleProduct;
+use App\SaleProductAttribute;
 use App\VisitType;
 use App\Visit;
 use App\Movement;
@@ -65,7 +66,7 @@ class SalesController extends BaseController
                 $type = VisitType::findByCode('VTA'); // get visit type
 
                 // create the visit as sale (VTA) type
-                Visit::create([
+                $visit = Visit::create([
                     'visit_date' => date('Y-m-d H:i:s'),
                     'visit_type_id' => $type->id,
                     'client_id' => $request->client_id
@@ -98,6 +99,16 @@ class SalesController extends BaseController
                         'is_devolution' => 0,
                     ]);
 
+                    // save product's attributes
+                    foreach ($item['attributes'] as $attr) {
+                        SaleProductAttribute::create([
+                            'sale_product_id' => $sale_product->id,
+                            'attribute_id' => $attr['attribute_id'],
+                            'left_value' => $attr['left_value'],
+                            'right_value' => $attr['right_value']
+                        ]);
+                    }
+
                     $subtotal += $sale_product->subtotal;
                 }
 
@@ -106,6 +117,11 @@ class SalesController extends BaseController
                 $sale->iva_amount = $subtotal * ($sale->iva_percent / 100); 
                 $sale->total = $subtotal + $sale->iva_amount;
                 $sale->save();
+
+
+                // =============== Relate Sale to Visit ===============
+                $visit->sale_id = $sale->id;
+                $visit->save();
 
 
                 // =============== Create the Movement ===============
@@ -120,11 +136,15 @@ class SalesController extends BaseController
 
                 // save movement's products
                 foreach ($request->products as $item) {
-                    $movProd = MovementProduct::create([
-                        'movement_id' => $movement->id,
-                        'product_id' => $item['id'],
-                        'quantity' => $item['quantity']
-                    ]);
+                    $product = Product::find($item['id']);
+
+                    if ($product->type == 'P') {
+                        $movProd = MovementProduct::create([
+                            'movement_id' => $movement->id,
+                            'product_id' => $item['id'],
+                            'quantity' => $item['quantity']
+                        ]);
+                    }
                 }
 
                 // update stock

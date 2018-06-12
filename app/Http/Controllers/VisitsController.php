@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use App\VisitType;
 use App\VisitAttribute;
+use App\Attribute;
 
 class VisitsController extends BaseController
 {
@@ -16,7 +17,7 @@ class VisitsController extends BaseController
     // params needen for index
     protected $searchFields = [];
     protected $indexPaginate = 10;
-    protected $indexJoins = ['visit_type','visit_attributes', 'visit_attributes.attribute'];
+    protected $indexJoins = ['visit_type','visit_attributes', 'visit_attributes.attribute', 'sale'];
     protected $orderBy = ['field' => 'visit_date', 'type' => 'DESC'];
     
     // params needer for show
@@ -46,6 +47,7 @@ class VisitsController extends BaseController
     public function store(Request $request)
     {
         $mainModel = $this->mainModel;
+        $errors = [];
 
         $rules = $this->parseFormRules(0);
         $validator = Validator::make($request->all(), $rules);
@@ -67,18 +69,43 @@ class VisitsController extends BaseController
                 ]);
 
                 // save attributes
-                foreach ($request->visit_attributes as $attr) {
+                foreach ($request->visit_attributes as $item) {
+                    $attr = Attribute::find($item['attribute_id']);
+
+                    $left = floatval($item['left_value']);
+                    $right = floatval($item['right_value']);
+
+                    // validations for left value
+                    if ($left < $attr->min || $left > $attr->max) {
+                        $errors[] = $attr->name .' de OJO IZQ. debe ser entre '. $attr->min .' y '. $attr->max;
+                    } else if (fmod($left, $attr->steps) != 0) {
+                        $errors[] = $attr->name .' de OJO IZQ. debe ser multiplo de '. $attr->steps;
+                    }
+
+                    // validations for right value
+                    if ($right < $attr->min || $right > $attr->max) {
+                        $errors[] = $attr->name .' de OJO DER. debe ser entre '. $attr->min .' y '. $attr->max;
+                    } else if (fmod($right, $attr->steps) != 0) {
+                        $errors[] = $attr->name .' de OJO DER. debe ser multiplo de '. $attr->steps;
+                    }
+
+
                     VisitAttribute::create([
                         'visit_id'     => $visit->id,
-                        'attribute_id' => $attr['attribute_id'],
-                        'left_value'   => $attr['left_value'],
-                        'right_value'  => $attr['right_value']
+                        'attribute_id' => $item['attribute_id'],
+                        'left_value'   => $item['left_value'],
+                        'right_value'  => $item['right_value']
                     ]);
                 }
 
-                DB::commit();
+                if (count($errors)) {
+                    return Response::json(array('msg' => 'Validaciones', 'errors' => $errors), 422);
+                    
+                } else {
+                    DB::commit();
+                    return $visit;
+                }
 
-                return $visit;
             } catch (Exception $e) {
                 return Response::json(array('msg' => 'Error al guardar'), 500);
             }
@@ -91,7 +118,7 @@ class VisitsController extends BaseController
      * @param  int  $id
      * @return Response
      */
-    public function update($id, Request $request)
+    /*public function update($id, Request $request)
     {
         if (! $this->allowUpdate) {
             return Response::json(array('msg' => 'Modelo no permite actualizar'), 500);
@@ -150,5 +177,5 @@ class VisitsController extends BaseController
         
             return $visit;
         }
-    }
+    }*/
 }

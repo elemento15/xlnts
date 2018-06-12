@@ -19,4 +19,9 @@ class SaleProduct extends Model
     {
         return $this->belongsTo('App\Sale');
     }
+
+    public function attributes()
+    {
+        return $this->hasMany('App\SaleProductAttribute');
+    }
 }

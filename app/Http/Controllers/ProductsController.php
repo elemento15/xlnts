@@ -14,7 +14,7 @@ class ProductsController extends BaseController
     // params needen for index
     protected $searchFields = ['description'];
     protected $indexPaginate = 8;
-    protected $indexJoins = ['group','attributes','stock'];
+    protected $indexJoins = ['group','attributes','attributes.attribute','stock'];
     protected $orderBy = ['field' => 'description', 'type' => 'ASC'];
     
     // params needer for show

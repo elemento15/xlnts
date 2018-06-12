@@ -237,3 +237,8 @@ input.cls-input-small { width: 90px !important; }
 	color: #fff;
 	background-color: #5cb85c;
 }
+
+input.cls-error {
+	border-color: #bd0000;
+	color: #bd0000;
+}

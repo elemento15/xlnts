@@ -65,8 +65,10 @@
 			<table class="table table-condensed table-bordered cls-table">
 				<thead>
 					<tr>
-						<th align="center">Tipo</th>
-						<th>Fecha</th>
+						<th class="text-center">Tipo</th>
+						<th class="text-center">Fecha</th>
+						<th class="text-center">Importe</th>
+						<th width="50">&nbsp;</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -81,7 +83,14 @@
 								{{ rec.visit_type.name }}
 							</span>
 						</td>
-						<td>{{ rec.visit_date }}</td>
+						<td class="text-center" title="{{ rec.visit_date }}">{{ rec.visit_date.substr(0, 10) }}</td>
+						<td class="text-right">
+							<span ng-show="rec.sale">${{ rec.sale.total | number: 2 }}</span>
+						</td>
+						<td class="text-center">
+							<span class="glyphicon glyphicon-info-sign" ng-show="rec.sale.has_invoice" 
+							      style="color: #e8b314;" title="Venta con factura"></span>
+						</td>
 					</tr>
 				</tbody>
 			</table>
