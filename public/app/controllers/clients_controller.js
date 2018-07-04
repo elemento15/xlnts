@@ -510,7 +510,51 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 		} else {
 			toastr.warning('Hay atributos invalidos en los productos');
 		}
+	}
 
+	$scope.getLastVisitAttr = function (product) {
+		var client_id = $scope.selectedClient.id;
+
+		$ngConfirm({
+			title: 'Leer atributos',
+			content: '¿Desea obtener los atributos de la última visita?',
+			type: 'blue',
+			buttons: {
+				ok: {
+					text: 'Aceptar',
+					btnClass: 'btn-primary',
+					action: function () {
+						var data = {
+							id: client_id
+						};
+
+						ClientService.lastVisit(data)
+							.success(function(response) {
+								var visitAttr = response.visit_attributes || null;
+
+								if (visitAttr) {
+									// set the last visit attributes into theproduct attributes
+									product.attributes.forEach(function (item) {
+										visitAttr.forEach(function (attr) {
+											if (item.attribute_id == attr.attribute_id) {
+												item.left_value = parseFloat(attr.left_value);
+												item.right_value = parseFloat(attr.right_value);
+											}
+										});
+									});
+								}
+							})
+							.error(function(response) {
+								toastr.error(response.msg || 'Error en el servidor');
+							});
+					}
+				},
+				close: {
+					text: 'Omitir',
+					btnClass: 'btn-default'
+				}
+			}
+		});
 	}
 	
 

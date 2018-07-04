@@ -35,6 +35,7 @@ Route::resource('movements', 'MovementsController');
 Route::resource('clients', 'ClientsController');
 Route::post('clients/{id}/activate', 'ClientsController@activate');
 Route::post('clients/{id}/deactivate', 'ClientsController@deactivate');
+Route::post('clients/{id}/last-visit', 'ClientsController@lastVisit');
 
 Route::resource('visits', 'VisitsController');
 Route::resource('sales', 'SalesController');

@@ -164,8 +164,11 @@ app.factory('ClientService', ['$http', function($http) {
 		deactivate : function(data) {
 			return $http.post('clients/'+ data.id +'/deactivate');
 		},
-		saveVisit : function(data) {
-			return $http.post('clients/'+ data.id +'/visit', data)
+		saveVisit : function(data) { // TODO: delete if not in use
+			return $http.post('clients/'+ data.id +'/visit', data);
+		},
+		lastVisit : function(data) {
+			return $http.post('clients/'+ data.id +'/last-visit');
 		}
 	}
 }]);

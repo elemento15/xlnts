@@ -65,4 +65,17 @@ class ClientsController extends BaseController
 
         return Response::json($visit);
     }*/
+
+    public function lastVisit($id, Request $request)
+    {
+        // get the visit type for "Visit"
+        $type = VisitType::findByCode('VIS');
+
+        $visit = Visit::with('visit_attributes')
+                      ->where('client_id', $id)
+                      ->where('visit_type_id', $type->id)
+                      ->orderBy('visit_date', 'desc')->first();
+
+        return Response::json($visit);
+    }
 }
