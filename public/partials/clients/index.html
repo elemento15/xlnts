@@ -78,10 +78,11 @@
 							      class="label label-info cls-pointer" title="Ver Visita">
 								{{ rec.visit_type.name }}
 							</span>
-							<span ng-show="rec.visit_type.code == 'VTA'"
-							      class="label label-success cls-pointer" title="Ver Venta">
+							<a ng-show="rec.visit_type.code == 'VTA'" 
+							   class="label label-success cls-pointer" title="Ver Venta"
+							   href="sales/{{ rec.sale_id }}/pdf" target="blank">
 								{{ rec.visit_type.name }}
-							</span>
+							</a>
 						</td>
 						<td class="text-center" title="{{ rec.visit_date }}">{{ rec.visit_date.substr(0, 10) }}</td>
 						<td class="text-right">

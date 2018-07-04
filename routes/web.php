@@ -39,6 +39,7 @@ Route::post('clients/{id}/last-visit', 'ClientsController@lastVisit');
 
 Route::resource('visits', 'VisitsController');
 Route::resource('sales', 'SalesController');
+Route::get('sales/{id}/pdf', 'SalesController@showPdf');
 
 Route::group(['middleware' => ['admin']], function () {
 	Route::resource('users', 'UsersController');
