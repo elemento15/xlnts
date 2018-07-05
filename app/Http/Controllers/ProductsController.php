@@ -92,6 +92,6 @@ class ProductsController extends BaseController
 
         $pdf = new Kardex();
         $pdf->setParams($product, $details);
-        $pdf->print();
+        $pdf->printPDF();
     }
 }
