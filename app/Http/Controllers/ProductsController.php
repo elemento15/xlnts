@@ -6,6 +6,8 @@ use Response;
 use Illuminate\Http\Request;
 use App\Product;
 use App\AttributeProduct;
+use App\MovementProduct;
+use App\Reports\Kardex;
 
 class ProductsController extends BaseController
 {
@@ -76,5 +78,20 @@ class ProductsController extends BaseController
         } else {
             return Response::json(array('success' => true, 'total' => $count));
         }
+    }
+
+    public function pdfKardex($id)
+    {
+        $product = Product::find($id);
+        $details = MovementProduct::with('movement')
+                                  ->with('movement.movement_concept')
+                                  ->where('product_id', $id)
+                                  ->get();
+
+        // dd($details);
+
+        $pdf = new Kardex();
+        $pdf->setParams($product, $details);
+        $pdf->print();
     }
 }

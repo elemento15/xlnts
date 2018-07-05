@@ -25,6 +25,7 @@ Route::resource('roles', 'RolesController');
 
 Route::get('products', 'ProductsController@index');
 Route::post('products/search-product', 'ProductsController@searchProduct');
+Route::get('products/{id}/pdf-kardex', 'ProductsController@pdfKardex');
 
 Route::get('groups', 'GroupsController@index');
 

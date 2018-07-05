@@ -31,7 +31,7 @@
 			<table class="table table-condensed table-bordered cls-table">
 				<thead>
 					<tr>
-						<th width="75">Acciones</th>
+						<th width="95">Acciones</th>
 						<th>Descripción - Grupo</th>
 						<th width="80" class="text-center">Tipo</th>
 						<th width="60" class="text-center">Atrib.</th>
@@ -43,7 +43,19 @@
 				<tbody>
 					<tr data-ng-repeat="(key, rec) in list" ng-dblclick="view(rec.id)">
 						<!-- actions buttons -->
-						<td ng-include="tpls.actions"></td>
+						<td>
+							<div class="cls-actions">
+								<button class="btn btn-info btn-xs" ng-click="view(rec.id)">
+									<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+								</button>
+								<button class="btn btn-danger btn-xs" ng-click="delete(rec.id)">
+									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+								</button>
+								<a class="btn btn-default btn-xs" href="products/{{ rec.id }}/pdf-kardex" target="blank">
+									<span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+								</a>
+							</div>
+						</td>
 						<td>
 							<div>{{ rec.description }}</div>
 							<div class="cls-small">{{ rec.group.name }}</div>
