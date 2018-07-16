@@ -15,6 +15,7 @@ use App\Visit;
 use App\Movement;
 use App\MovementConcept;
 use App\MovementProduct;
+use App\Configuration;
 use PDF;
 
 class SalesController extends BaseController
@@ -77,12 +78,14 @@ class SalesController extends BaseController
                 
                 // =============== Create the Sale ===============
                 $subtotal = 0;
+
+                $iva = ($config = Configuration::first()) ? $config->iva : 0;
                 
                 $sale = $mainModel::create([
                     'sale_date' => date('Y-m-d H:i:s'),
                     'client_id' => $request->client_id,
                     'has_invoice' => $request->has_invoice,
-                    'iva_percent' => ($request->has_invoice) ? 16 : 0, // TODO: get iva_percent from configurations
+                    'iva_percent' => ($request->has_invoice) ? $iva : 0, // TODO: get iva_percent from configurations
                     'comments' => $request->comments
                 ]);
 

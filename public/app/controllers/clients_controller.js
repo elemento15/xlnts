@@ -1,6 +1,6 @@
 app.controller('ClientsController', function ($scope, $http, $route, $location, $ngConfirm, $uibModal, $timeout,
 	                                          ClientService, AttributeService, VisitService, ProductService,
-	                                          SaleService, toastr) {
+	                                          SaleService, ConfigurationService, toastr) {
 	this.index = '/clients';
 	this.title = {};
 
@@ -24,7 +24,6 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 	$scope.sale = {
 		id: 0,
 		client_id: 0,
-		iva_percent: 16, // TODO: Get IVA from configurations
 		has_invoice: 0,
 		comments: '',
 		products: []
@@ -60,6 +59,10 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 	// property when editing the product in list
 	$scope.editing = {
 		quantity: null
+	};
+
+	$scope.configs = {
+		iva: 0
 	};
 
 
@@ -233,7 +236,6 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 		$scope.sale = {
 			id: 0,
 			client_id: 0,
-			iva_percent: 16, // TODO: Get IVA from configurations
 			has_invoice: 0,
 			comments: '',
 			products: []
@@ -430,7 +432,7 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 		});
 
 		// set iva_amount if sale has_invoice
-		iva_amount = (sale.has_invoice) ? subtotal * (sale.iva_percent / 100) : 0;
+		iva_amount = (sale.has_invoice) ? subtotal * ($scope.configs.iva / 100) : 0;
 
 		$scope.totals = {
 			subtotal: subtotal,
@@ -556,10 +558,20 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 			}
 		});
 	}
+
+	$scope.readConfigurations = function () {
+		ConfigurationService.read()
+			.success(function (response) {
+				$scope.configs = response;
+			}).error(function (response) {
+				toastr.error(response.msg || 'Error en el servidor');
+			});
+	}
 	
 
 	$scope.$on('$viewContentLoaded', function (view) {
 		$scope.readAttributes();
+		$scope.readConfigurations();
 	});
 
 
