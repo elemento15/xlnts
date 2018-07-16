@@ -242,3 +242,8 @@ input.cls-error {
 	border-color: #bd0000;
 	color: #bd0000;
 }
+
+.cls-negative {
+	color: #ff0000;
+	font-weight: bold;
+}

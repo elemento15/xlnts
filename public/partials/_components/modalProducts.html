@@ -26,7 +26,12 @@
                 <td>{{ product.description }}</td>
                 <td>{{ product.group.name }}</td>
                 <td class="text-right">${{ product.price | number : 2 }}</td>
-                <td class="text-right text-muted">{{ (product.stock.quantity | number) || '-' }}</td>
+                <td class="text-right">
+                    <span class="text-muted" ng-show="product.stock == null">{{ '-' }}</span>
+                    <span class="text-muted" ng-show="product.stock.quantity >= 0">{{ (product.stock.quantity | number) }}</span>
+                    <span class="cls-negative" ng-show="product.stock.quantity < 0">{{ (product.stock.quantity | number) }}</span>
+                    
+                </td>
             </tr>
         </tbody>
     </table>

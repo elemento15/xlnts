@@ -16,5 +16,6 @@ class DatabaseSeeder extends Seeder
         $this->call(MovementConceptsTableSeeder::class);
         $this->call(VisitTypesTableSeeder::class);
         $this->call(AttributesTableSeeder::class);
+        $this->call(ConfigurationsTableSeeder::class);
     }
 }
