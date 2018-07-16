@@ -206,3 +206,14 @@ app.factory('SaleService', ['$http', function($http) {
 		}
 	}
 }]);
+
+app.factory('ConfigurationService', ['$http', function($http) {
+	return {
+		read : function(data) {
+			return $http.get('configurations');
+		},
+		save : function(data) {
+			return $http.post('configurations', data);
+		}
+	} 
+}]);

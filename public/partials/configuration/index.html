@@ -1,0 +1,29 @@
+<div class="container-fluid">
+	<h3 class="cls-title">Configuración</h3>
+
+	<form class="row">
+		<div class="col-sm-6">
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label>IVA %:</label>
+						<input type="number" class="form-control text-right" ng-model="data.iva" autocomplete="off">
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
+	<!-- form toolbar -->
+	<div class="row cls-toolbar">
+		<div class="col-sm-12">
+			<button class="btn btn-primary btn-sm" ng-click="save()">
+				<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Guardar
+			</button>
+			<button class="btn btn-default btn-sm" ng-click="close()">
+				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cerrar
+			</button>
+		</div>
+	</div>
+
+</div>

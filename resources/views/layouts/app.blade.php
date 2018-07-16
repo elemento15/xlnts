@@ -50,6 +50,7 @@
     <!-- controllers -->
     <script src="/app/controllers/base_controller.js"></script>
     <script src="/app/controllers/home_controller.js"></script>
+    <script src="/app/controllers/configuration_controller.js"></script>
     <script src="/app/controllers/users_controller.js"></script>
     <script src="/app/controllers/groups_controller.js"></script>
     <script src="/app/controllers/attributes_controller.js"></script>

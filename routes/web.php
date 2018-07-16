@@ -71,4 +71,7 @@ Route::group(['middleware' => ['admin']], function () {
 	Route::post('movement_concepts/{id}/deactivate', 'MovementConceptsController@deactivate');
 
 	Route::post('movements/{id}/cancel', 'MovementsController@cancel');
+
+	Route::get('configurations', 'ConfigurationsController@read');
+	Route::post('configurations', 'ConfigurationsController@save');
 });
