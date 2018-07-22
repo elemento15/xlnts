@@ -22,18 +22,20 @@ function BaseController($scope, $route, $location, $ngConfirm, ModelService, toa
 	$scope.title = me.title.new || 'Nuevo Registro';
 	$scope.search = '';
 	$scope.pageInfo = '1/1';
+	$scope.pageDetailInfo = '1/1';
 
 	// templates / partials
 	$scope.tpls = {
-		new_button    : 'partials/_tpls/new_button.html',
-		new_button_sm : 'partials/_tpls/new_button_small.html',
-		search        : 'partials/_tpls/index_search.html',
-		paginator     : 'partials/_tpls/index_paginator.html',
-		actions       : 'partials/_tpls/index_actions.html',
-		filter_status : 'partials/_tpls/index_filter_status.html',
-		filter_cancel : 'partials/_tpls/index_filter_cancel.html',
-		change_status : 'partials/_tpls/index_change_status.html',
-		form_toolbar  : 'partials/_tpls/form_toolbar.html',
+		new_button       : 'partials/_tpls/new_button.html',
+		new_button_sm    : 'partials/_tpls/new_button_small.html',
+		search           : 'partials/_tpls/index_search.html',
+		paginator        : 'partials/_tpls/index_paginator.html',
+		paginator_detail : 'partials/_tpls/index_paginator_detail.html',
+		actions          : 'partials/_tpls/index_actions.html',
+		filter_status    : 'partials/_tpls/index_filter_status.html',
+		filter_cancel    : 'partials/_tpls/index_filter_cancel.html',
+		change_status    : 'partials/_tpls/index_change_status.html',
+		form_toolbar     : 'partials/_tpls/form_toolbar.html',
 	}
 
 	$scope.new = function () {
@@ -172,6 +174,11 @@ function BaseController($scope, $route, $location, $ngConfirm, ModelService, toa
 	$scope.setPagination = function (data, pagination) {
 		pagination.total = data.last_page;
 		$scope.pageInfo = (pagination.page) +'/'+ pagination.total;
+	}
+
+	$scope.setPaginationDetail = function (data, pagination) {
+		$scope.pagination_detail.total = data.last_page;
+		$scope.pageDetailInfo = ($scope.pagination_detail.page) +'/'+ $scope.pagination_detail.total;
 	}
 
 	$scope.paginate = function (type, force) {

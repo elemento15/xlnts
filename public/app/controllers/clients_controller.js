@@ -67,6 +67,12 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 		iva: 0
 	};
 
+	$scope.pagination_detail = {
+		page: 1,
+		total: 1,
+		limit: 5
+	};
+
 
 	$scope.clearModel = function () {
 		$scope.data = {
@@ -217,16 +223,43 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 
 	$scope.readVisits = function (client_id) {
 		VisitService.read({
-			page: 1,
+			page: $scope.pagination_detail.page,
 			filters: [{ field: 'client_id', value: client_id}],
 			search: ''
 		}).success(function (response) {
 			$scope.visitsList = response.data;
-			/*$scope.list = response.data;
-			$scope.setPagination(response, pagination);*/
+			$scope.setPaginationDetail(response, $scope.pagination_detail);
 		}).error(function (response) {
 			toastr.error(response.msg || 'Error en el servidor');
 		});
+	}
+
+	$scope.paginateDetail = function (type, force) {
+		var data = this.pagination_detail;
+		var page = data.current_page;
+
+		switch (type) {
+			case 'first' :
+				data.page = 1;
+				break;
+			case 'previous' :
+				if (data.page > 1) {
+					data.page--;
+				}
+				break;
+			case 'next' :
+				if (data.page < data.total) {
+					data.page++;
+				}
+				break;
+			case 'last' :
+				data.page = data.total;
+				break;
+		}
+
+		if (page != data.page || force) {
+			$scope.readVisits($scope.selectedClient.id || 0); // read only if page has changed
+		}
 	}
 
 	$scope.afterRead = function () {
