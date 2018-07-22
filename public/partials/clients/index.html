@@ -178,6 +178,7 @@
 								<th width="90" class="text-center">Precio</th>
 								<th width="90" class="text-center">Total</th>
 								<th width="70" class="text-center">Atributos</th>
+								<th width="100" class="text-center">&nbsp;</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -198,13 +199,18 @@
 									<span class="label label-info" ng-show="item.type == 'S'">Servicio</span>
 								</td>
 								<td class="text-right">
-									<span ng-hide="item._editing" ng-dblclick="showDetailQuantity(item)">{{ item.quantity | number:2 }}</span>
+									<span ng-hide="item._editing_quantity" ng-dblclick="showDetailQuantity(item)">{{ item.quantity | number:2 }}</span>
 									<input type="number" class="form-control input-sm text-right" min="1" 
-									       ng-model="editing.quantity" ng-show="item._editing" 
+									       ng-model="editing.quantity" ng-show="item._editing_quantity" 
 									       ng-keyup="keyUpDetailQuantity($event, item)" ng-blur="blurQuantityDetail(item)">
 								</td>
-								<td class="text-right">${{ item.price | number:2 }}</td>
-								<td class="text-right">${{ item.total | number:2 }}</td>
+								<td class="text-right">
+									<span ng-hide="item._editing_price" ng-dblclick="showDetailPrice(item)">${{ item.price | number:2 }}</span>
+									<input type="number" class="form-control input-sm text-right" min="1" 
+									       ng-model="editing.price" ng-show="item._editing_price" 
+									       ng-keyup="keyUpDetailPrice($event, item)" ng-blur="blurQuantityPrice(item)">
+								</td>
+								<td class="text-right" ng-class="{'cls-negative' : (item.is_devolution)}">${{ item.total | number:2 }}</td>
 								<td class="text-center">
 									<span class="label label-default" 
 									      ng-show="showProductAttrLabel(item.attributes) == 'NO'">No</span>
@@ -212,6 +218,12 @@
 									      ng-show="showProductAttrLabel(item.attributes) == 'PEND'">Ver</span>
 									<span class="label label-success cls-pointer" ng-click="showAttributesForm(item)"
 									      ng-show="showProductAttrLabel(item.attributes) == 'OK'">Ver</span>
+								</td>
+								<td class="text-center">
+									<span class="label label-warning cls-pointer" ng-show="item.is_devolution" 
+									      ng-click="setProductDevolution(item, 0)">Es Devolución</span>
+									<span class="label label-default cls-pointer" ng-hide="item.is_devolution" 
+									      ng-click="setProductDevolution(item, 1)">Devolver</span>
 								</td>
 							</tr>
 						</tbody>

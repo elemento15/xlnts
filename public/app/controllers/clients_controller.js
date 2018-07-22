@@ -59,7 +59,8 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 
 	// property when editing the product in list
 	$scope.editing = {
-		quantity: null
+		quantity: 0,
+		price: 0
 	};
 
 	$scope.configs = {
@@ -304,8 +305,9 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 			description: product.description,
 			group: product.group.name,
 			quantity: 1,
-			price: product.price,
+			price: parseFloat(product.price),
 			type: product.type,
+			is_devolution: 0,
 			attributes: product.attributes
 		};
 	}
@@ -380,10 +382,8 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 	}
 
 	$scope.showDetailQuantity = function (product) {
-		// if (!$scope.isNew()) return false;
-
 		$scope.editing.quantity = product.quantity;
-		product._editing = true;
+		product._editing_quantity = true;
 
 		// set focus
 		$timeout(function () {
@@ -391,21 +391,56 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 		}, 100);
 	}
 
+	$scope.showDetailPrice = function (product) {
+		$scope.editing.price = product.price;
+		product._editing_price = true;
+
+		// set focus
+		$timeout(function () {
+			$("#productsList input[ng-model='editing.price']").select();
+		}, 100);
+	}
+
 	$scope.keyUpDetailQuantity = function (evt, product) {
 		var code = evt.keyCode;
 		var editing = $scope.editing.quantity;
+		var total;
 
 		if (code == 27) { // escape
 			$scope.editing.quantity = 0;
-			product._editing = false;
+			product._editing_quantity = false;
 		}
+
 
 		if (code == 13) { // enter
 			if (! isNaN(editing) && editing > 0 && editing < 500000) {
 				product.quantity = editing;
-				product.total = product.quantity * product.price;
+				total = product.quantity * product.price;
+				product.total = (product.is_devolution) ? (total * -1) : total;
 			}
-			product._editing = false;
+			product._editing_quantity = false;
+		}
+
+		$scope.calculateTotals();
+	}
+
+	$scope.keyUpDetailPrice = function (evt, product) {
+		var code = evt.keyCode;
+		var editing = $scope.editing.price;
+		var total;
+
+		if (code == 27) { // escape
+			$scope.editing.price = 0;
+			product._editing_price = false;
+		}
+
+		if (code == 13) { // enter
+			if (! isNaN(editing) && editing > 0 && editing < 500000) {
+				product.price = editing;
+				total = product.quantity * product.price;
+				product.total = (product.is_devolution) ? (total * -1) : total;
+			}
+			product._editing_price = false;
 		}
 
 		$scope.calculateTotals();
@@ -413,13 +448,29 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 
 	$scope.blurQuantityDetail = function (product) {
 		var editing = $scope.editing.quantity;
+		var total;
 
 		if (! isNaN(editing) && editing > 0 && editing < 500000) {
 			product.quantity = editing;
-			product.total = product.quantity * product.price;
+			total = product.quantity * product.price;
+			product.total = (product.is_devolution) ? (total * -1) : total;
 		}
 
-		product._editing = false;
+		product._editing_quantity = false;
+		$scope.calculateTotals();
+	}
+
+	$scope.blurPriceDetail = function (product) {
+		var editing = $scope.editing.price;
+		var total;
+
+		if (! isNaN(editing) && editing > 0 && editing < 500000) {
+			product.price = editing;
+			total = product.quantity * product.price;
+			product.total = (product.is_devolution) ? (total * -1) : total;
+		}
+
+		product._editing_price = false;
 		$scope.calculateTotals();
 	}
 
@@ -567,6 +618,13 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 			}).error(function (response) {
 				toastr.error(response.msg || 'Error en el servidor');
 			});
+	}
+
+	$scope.setProductDevolution = function (detail, opt) {
+		var total = detail.quantity * detail.price;
+		detail.total = (opt) ? (total * -1) : total;
+		detail.is_devolution = opt;
+		$scope.calculateTotals();
 	}
 	
 

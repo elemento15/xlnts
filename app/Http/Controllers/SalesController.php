@@ -78,6 +78,8 @@ class SalesController extends BaseController
                 
                 // =============== Create the Sale ===============
                 $subtotal = 0;
+                $count_prods_sell = 0; // count of products selled
+                $count_prods_dev = 0;  // count of products devolve
 
                 $iva = ($config = Configuration::first()) ? $config->iva : 0;
                 
@@ -93,16 +95,26 @@ class SalesController extends BaseController
                 foreach ($request->products as $item) {
                     $product = Product::find($item['id']);
 
+                    $product_subtotal = $item['quantity'] * $item['price'];
+
                     $sale_product = SaleProduct::create([
                         'sale_id'       => $sale->id,
                         'product_id'    => $product->id,
                         'product_type'  => $product->type,
                         'description'   => $product->description,
                         'quantity'      => $item['quantity'],
-                        'price'         => $product->price,
-                        'subtotal'      => $item['quantity'] * $product->price,
-                        'is_devolution' => 0,
+                        'product_price' => $product->price,
+                        'saved_price'   => $item['price'],
+                        'subtotal'      => ($item['is_devolution']) ? ($product_subtotal * -1) : $product_subtotal,
+                        'is_devolution' => $item['is_devolution'],
                     ]);
+
+                    // count sold and devolve products
+                    if ($item['is_devolution']) {
+                        $count_prods_dev++;
+                    } else {
+                        $count_prods_sell++;
+                    }
 
                     // save product's attributes
                     foreach ($item['attributes'] as $attr) {
@@ -129,32 +141,67 @@ class SalesController extends BaseController
                 $visit->save();
 
 
-                // =============== Create the Movement ===============
-                $concept = MovementConcept::findByCode('VTA');
+                // =============== Create Movements ===============
+                if ($count_prods_sell) {
+                    $concept = MovementConcept::findByCode('VTA');
 
-                $movement = Movement::create([
-                    'mov_date' => date('Y-m-d H:i:s'),
-                    'movement_concept_id' => $concept->id,
-                    'type' => $concept->type,
-                    'active' => 1
-                ]);
+                    $movement = Movement::create([
+                        'mov_date' => date('Y-m-d H:i:s'),
+                        'movement_concept_id' => $concept->id,
+                        'type' => $concept->type,
+                        'active' => 1
+                    ]);
 
-                // save movement's products
-                foreach ($request->products as $item) {
-                    $product = Product::find($item['id']);
+                    // save movement's products
+                    foreach ($request->products as $item) {
+                        if ($item['is_devolution']) continue;
+                        
+                        $product = Product::find($item['id']);
 
-                    if ($product->type == 'P') {
-                        $movProd = MovementProduct::create([
-                            'movement_id' => $movement->id,
-                            'product_id' => $item['id'],
-                            'quantity' => $item['quantity']
-                        ]);
+                        if ($product->type == 'P') {
+                            $movProd = MovementProduct::create([
+                                'movement_id' => $movement->id,
+                                'product_id' => $item['id'],
+                                'quantity' => $item['quantity']
+                            ]);
+                        }
                     }
+
+                    // update stock
+                    $movement->updateStock();
                 }
 
-                // update stock
-                $movement->updateStock();
 
+                if ($count_prods_dev) {
+                    $concept = MovementConcept::findByCode('DEV');
+
+                    $movement = Movement::create([
+                        'mov_date' => date('Y-m-d H:i:s'),
+                        'movement_concept_id' => $concept->id,
+                        'type' => $concept->type,
+                        'active' => 1
+                    ]);
+
+                    // save movement's products
+                    foreach ($request->products as $item) {
+                        if (! $item['is_devolution']) continue;
+
+                        $product = Product::find($item['id']);
+
+                        if ($product->type == 'P') {
+                            $movProd = MovementProduct::create([
+                                'movement_id' => $movement->id,
+                                'product_id' => $item['id'],
+                                'quantity' => $item['quantity']
+                            ]);
+                        }
+                    }
+
+                    // update stock
+                    $movement->updateStock();
+                }
+
+                // =============== End Create Movements ===============
 
                 DB::commit();
 
@@ -211,7 +258,7 @@ class SalesController extends BaseController
         foreach ($sale->sale_products as $key => $item) {
             $pdf->Cell(15, 0, number_format($item->quantity, 2), $border, 0, 'R');
             $pdf->Cell(125, 0, $item->description, $border, 0, '');
-            $pdf->Cell(25, 0, number_format($item->price, 2), $border, 0, 'R');
+            $pdf->Cell(25, 0, number_format($item->saved_price, 2), $border, 0, 'R');
             $pdf->Cell(25, 0, number_format($item->subtotal, 2), $border, 1, 'R');
         }
 
