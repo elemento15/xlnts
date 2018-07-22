@@ -14,7 +14,7 @@ class MovementsController extends BaseController
     protected $mainModel = 'App\Movement';
 
     // params needen for index
-    protected $searchFields = ['mov_date'];
+    protected $searchFields = ['id'];
     protected $indexPaginate = 10;
     protected $indexJoins = ['movement_concept'];
     protected $orderBy = ['field' => 'mov_date', 'type' => 'DESC'];

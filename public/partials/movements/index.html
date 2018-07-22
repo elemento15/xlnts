@@ -22,6 +22,7 @@
 				<thead>
 					<tr>
 						<th width="75">Acciones</th>
+						<th class="text-center" width="50">ID</th>
 						<th class="text-center" width="100">Fecha</th>
 						<th>Concepto</th>
 						<th width="120" class="text-center">Tipo</th>
@@ -43,6 +44,7 @@
 								</button>
 							</div>
 						</td>
+						<td class="text-right text-muted cls-small">{{ rec.id }}</td>
 						<td class="text-center">{{ rec.mov_date.substr(0, 10) }}</td>
 						<td>{{ rec.movement_concept.name }}</td>
 						<td class="text-center">

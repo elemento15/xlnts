@@ -220,10 +220,13 @@
 									      ng-show="showProductAttrLabel(item.attributes) == 'OK'">Ver</span>
 								</td>
 								<td class="text-center">
-									<span class="label label-warning cls-pointer" ng-show="item.is_devolution" 
-									      ng-click="setProductDevolution(item, 0)">Es Devolución</span>
-									<span class="label label-default cls-pointer" ng-hide="item.is_devolution" 
-									      ng-click="setProductDevolution(item, 1)">Devolver</span>
+									<span ng-show="item.type == 'S'">&nbsp;</span>
+									<div ng-hide="item.type == 'S'">
+										<span class="label label-warning cls-pointer" ng-show="item.is_devolution" 
+										      ng-click="setProductDevolution(item, 0)">Es Devolución</span>
+										<span class="label label-default cls-pointer" ng-hide="item.is_devolution" 
+										      ng-click="setProductDevolution(item, 1)">Devolver</span>
+									</div>
 								</td>
 							</tr>
 						</tbody>

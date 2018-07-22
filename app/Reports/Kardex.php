@@ -59,9 +59,10 @@ class Kardex extends \TCPDF
         $this->SetFont('helvetica', 'B', 8);
 
         // sub header
+        $this->Cell(14, 0, 'ID', $border, 0, 'C');
         $this->Cell(20, 0, 'Fecha', $border, 0, 'C');
         $this->Cell(10, 0, 'Man', $border, 0, 'C');
-        $this->Cell(90, 0, 'Concepto', $border, 0, 'L');
+        $this->Cell(75, 0, 'Concepto', $border, 0, 'L');
         $this->Cell(18, 0, 'Entrada', $border, 0, 'C');
         $this->Cell(18, 0, 'Salida', $border, 0, 'C');
         $this->Cell(18, 0, 'Existencia', $border, 1, 'C');
@@ -72,7 +73,6 @@ class Kardex extends \TCPDF
         $fill = false;
         $stock = 0;
 
-        $this->SetFont('helvetica', '', 9);
 
         foreach ($this->details as $key => $item) {
             $mov = $item->movement;
@@ -83,9 +83,13 @@ class Kardex extends \TCPDF
             $stock += ($mov->type == 'E') ? $item->quantity : 0;
             $stock -= ($mov->type == 'S') ? $item->quantity : 0;
 
+            $this->SetFont('helvetica', '', 8);
+            $this->Cell(14, 5, $item->movement->id, $border, 0, 'R', $fill);
+            
+            $this->SetFont('helvetica', '', 9);
             $this->Cell(20, 5, substr($item->movement->mov_date, 0, 10), $border, 0, 'C', $fill);
             $this->Cell(10, 5, ($mov->movement_concept->is_auto) ? '' : 'M', $border, 0, 'C', $fill);
-            $this->Cell(90, 5, $mov->movement_concept->name, $border, 0, 'L', $fill);
+            $this->Cell(75, 5, $mov->movement_concept->name, $border, 0, 'L', $fill);
             $this->Cell(18, 5, number_format(($mov->type == 'E') ? $item->quantity : 0, 2), $border, 0, 'R', $fill);
             $this->Cell(18, 5, number_format(($mov->type == 'S') ? $item->quantity : 0, 2), $border, 0, 'R', $fill);
             $this->Cell(18, 5, number_format($stock, 2), $border, 1, 'R', $fill);
