@@ -30,7 +30,17 @@ class UsersTableSeeder extends Seeder
         ];
 
         foreach ($users as $key => $item) {
-        	User::create($item);
+        	User::updateOrCreate(
+                [
+                    'email' => $item['email']
+                ],
+                [
+                    'name' => $item['name'],
+                    'role_id' => $item['role_id'],
+                    'password' => $item['password'],
+                    'active' => $item['active']
+                ]
+            );
         }
     }
 }

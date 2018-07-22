@@ -17,8 +17,11 @@ class RolesTableSeeder extends Seeder
         	['name' => 'Operador', 'code' => 'OPE']
         ];
 
-        foreach ($roles as $key => $item) {
-        	Role::create($item);
+
+        if (! Role::count()) {
+            foreach ($roles as $key => $item) {
+            	Role::create($item);
+            }
         }
     }
 }

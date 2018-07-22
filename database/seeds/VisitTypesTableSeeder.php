@@ -18,7 +18,7 @@ class VisitTypesTableSeeder extends Seeder
         ];
 
         foreach ($concepts as $key => $item) {
-        	VisitType::create($item);
+        	VisitType::updateOrCreate($item);
         }
     }
 }

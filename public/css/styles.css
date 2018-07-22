@@ -247,3 +247,7 @@ input.cls-error {
 	color: #ff0000;
 	font-weight: bold;
 }
+
+.cls-bold {
+	font-weight: bold;
+}

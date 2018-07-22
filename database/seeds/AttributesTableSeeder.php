@@ -52,8 +52,10 @@ class AttributesTableSeeder extends Seeder
         	]
         ];
 
-        foreach ($attrs as $key => $item) {
-			Attribute::create($item);
+        if (! Attribute::count()) {
+            foreach ($attrs as $key => $item) {
+    			Attribute::create($item);
+            }
         }
     }
 }

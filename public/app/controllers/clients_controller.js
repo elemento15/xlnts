@@ -48,7 +48,8 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 	};
 
 	$scope.filters = {
-		active: null
+		active: null,
+		is_general: 0
 	};
 
 	$scope.selectedClient = null;

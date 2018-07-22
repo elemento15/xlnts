@@ -10,8 +10,24 @@
 				<!-- new button -->
 				<div class="col-sm-3" ng-include="tpls.new_button"></div>
 
+				<!-- filter for is_general -->
+				<div class="col-sm-3">
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<div class="checkbox" style="margin-top: 6px;">
+								<label>
+									<input type="checkbox" ng-model="filters.is_general" 
+									       ng-true-value="1" ng-false-value="0"
+									       ng-change="searchData()"> 
+									       <span class="label label-info">Venta Rápida</span>
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+
 				<!-- search input -->
-				<div class="col-sm-6 col-sm-offset-3" ng-include="tpls.search"></div>
+				<div class="col-sm-5 col-sm-offset-1" ng-include="tpls.search"></div>
 			</div>
 
 			<table class="table table-condensed table-bordered cls-table">
@@ -32,7 +48,7 @@
 						<!-- change status component -->
 						<td align="center" ng-include="tpls.change_status"></td>
 						<td>
-							<div>{{ rec.name }}</div>
+							<div ng-class="{'cls-bold text-primary' : (rec.is_general)}">{{ rec.name }}</div>
 							<div class="cls-small">{{ rec.rfc }}</div>
 						</td>
 						<td>
@@ -56,7 +72,7 @@
 						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Venta
 					</button>
 					<button ng-click="openVisit()" class="btn btn-info btn-sm" 
-					        ng-class="{'disabled' : (!selectedClient)}">
+					        ng-class="{'disabled' : (!selectedClient)}" ng-hide="selectedClient.is_general">
 						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Visita
 					</button>
 				</div>

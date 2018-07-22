@@ -20,8 +20,10 @@ class MovementConceptsTableSeeder extends Seeder
         	['name' => 'SALIDA MANUAL', 'code' => NULL, 'type' => 'S', 'is_auto' => false]
         ];
 
-        foreach ($concepts as $key => $item) {
-        	MovementConcept::create($item);
+        if (! MovementConcept::count()) {
+            foreach ($concepts as $key => $item) {
+            	MovementConcept::create($item);
+            }
         }
     }
 }

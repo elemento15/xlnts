@@ -19,7 +19,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" ng-hide="$parent.data.is_general">
             <label class="col-sm-3 control-label">Email:</label>
             <div class="col-sm-9">
                 <input type="text" class="form-control" ng-model="$parent.data.email" 
@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" ng-hide="$parent.data.is_general">
             <label class="col-sm-3 control-label">Teléfono:</label>
             <div class="col-sm-9">
                 <input type="text" class="form-control" ng-model="$parent.data.phone" 
@@ -35,7 +35,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" ng-hide="$parent.data.is_general">
             <label class="col-sm-3 control-label">Celular:</label>
             <div class="col-sm-9">
                 <input type="text" class="form-control" ng-model="$parent.data.mobile" 
