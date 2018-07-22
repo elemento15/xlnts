@@ -110,10 +110,12 @@ class SalesController extends BaseController
                     ]);
 
                     // count sold and devolve products
-                    if ($item['is_devolution']) {
-                        $count_prods_dev++;
-                    } else {
-                        $count_prods_sell++;
+                    if ($product->type == 'P') {
+                        if ($item['is_devolution']) {
+                            $count_prods_dev++;
+                        } else {
+                            $count_prods_sell++;
+                        }
                     }
 
                     // save product's attributes
