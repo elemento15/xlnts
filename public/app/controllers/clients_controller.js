@@ -263,8 +263,16 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 	}
 
 	$scope.afterRead = function () {
-		$scope.selectedClient = null;
+		var client;
 		$scope.visitsList = [];
+		$scope.selectedClient = null;
+
+		if ($scope.list[0]) {
+			client = $scope.list[0];
+			$scope.selectedClient = client;
+			$scope.readVisits(client.id);
+		}
+
 	}
 
 	$scope.clearSale = function () {
