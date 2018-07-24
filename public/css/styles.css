@@ -183,6 +183,10 @@ ul.pagination li span:hover {
 	border-top: 0px;
 }
 
+.cls-tab-pill-contents {
+	padding: 10px;
+}
+
 .cls-form-text {
 	color: #3841a7;
 	font-size: 14px;

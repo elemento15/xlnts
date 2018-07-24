@@ -38,6 +38,7 @@
                             <li><a href="#/users">Usuarios</a></li>
                         </ul>
                     </li>
+                    <li><a href="#/reports">Reportes</a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->

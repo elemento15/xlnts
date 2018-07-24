@@ -1,0 +1,30 @@
+<div class="container-fluid">
+	<h3 class="cls-title">Reportes</h3>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<uib-tabset type="pills" active="active">
+				<uib-tab heading="Ventas Mensuales">
+					<div class="cls-tab-pill-contents">
+						<div class="form-group form-inline">
+							<label>Año: </label>
+							<input type="number" class="form-control text-right" ng-model="rpt01.year" 
+							       style="width: 100px" autocomplete="off">
+						</div>
+						<button class="btn btn-success" ng-click="runRpt01()">Generar</button>
+					</div>
+				</uib-tab>
+				<uib-tab heading="Mejores Clientes">
+					<div class="cls-tab-pill-contents">
+						&nbsp;
+					</div>
+				</uib-tab>
+				<uib-tab heading="Productos mas Vendidos">
+					<div class="cls-tab-pill-contents">
+						&nbsp;
+					</div>
+				</uib-tab>
+			</uib-tabset>
+		</div>
+	</div>
+</div>
