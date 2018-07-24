@@ -81,7 +81,8 @@
 			<table class="table table-condensed table-bordered cls-table">
 				<thead>
 					<tr>
-						<th class="text-center">Tipo</th>
+						<th class="text-center" width="70">Tipo</th>
+						<th class="text-center" width="70">ID</th>
 						<th class="text-center">Fecha</th>
 						<th class="text-center">Importe</th>
 						<th width="50">&nbsp;</th>
@@ -100,6 +101,7 @@
 								{{ rec.visit_type.name }}
 							</a>
 						</td>
+						<td class="text-right text-muted">{{ rec.sale.id }}</td>
 						<td class="text-center" title="{{ rec.visit_date }}">{{ rec.visit_date.substr(0, 10) }}</td>
 						<td class="text-right">
 							<span ng-show="rec.sale">${{ rec.sale.total | number: 2 }}</span>
