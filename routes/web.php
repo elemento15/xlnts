@@ -76,4 +76,5 @@ Route::group(['middleware' => ['admin']], function () {
 	Route::post('configurations', 'ConfigurationsController@save');
 
 	Route::get('reports/monthly_sales/{year}', 'ReportsController@monthlySales');
+	Route::get('reports/clients_sales', 'ReportsController@clientsSales');
 });

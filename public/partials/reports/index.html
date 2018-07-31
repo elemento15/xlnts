@@ -16,7 +16,14 @@
 				</uib-tab>
 				<uib-tab heading="Mejores Clientes">
 					<div class="cls-tab-pill-contents">
-						&nbsp;
+						<div class="checkbox" style="margin-top: 6px;">
+							<label>
+								<input type="checkbox" ng-model="rpt02.show_general" 
+								       ng-true-value="1" ng-false-value="0"> 
+								       <span class="">Incluir "Ventas Rápidas"</span>
+							</label>
+						</div>
+						<button class="btn btn-success" ng-click="runRpt02()">Generar</button>
 					</div>
 				</uib-tab>
 				<uib-tab heading="Productos mas Vendidos">
