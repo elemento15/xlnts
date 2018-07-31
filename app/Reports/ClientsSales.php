@@ -9,7 +9,7 @@ use Carbon\Carbon;
 
 class ClientsSales extends \TCPDF
 {
-    private $show_general;
+    private $show_general, $type_date, $date_ini, $date_end;
 
     public function __construct($request)
     {
@@ -24,6 +24,12 @@ class ClientsSales extends \TCPDF
         $this->SetLineStyle(array('width' => 0.1, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(150, 150, 150)));
 
         $this->show_general = intval($request->show_general);
+        $this->type_date = $request->type_date;
+
+        if ($request->type_date == 'R') {
+            $this->date_ini = $request->date_ini.' 00:00:00';
+            $this->date_end = $request->date_end.' 23:59:59';
+        }
     }
 
     public function Header()
@@ -96,6 +102,11 @@ class ClientsSales extends \TCPDF
                   ->select('c.id', 'c.name', DB::raw('SUM(s.total) AS totals'))
                   ->groupBy('c.id')
                   ->orderBy('totals', 'desc');
+
+        if ($this->type_date == 'R') {
+            $data->where('s.sale_date', '>=', $this->date_ini);
+            $data->where('s.sale_date', '<=', $this->date_end);
+        }
 
         if ($this->show_general == 0) {
             $data->where('c.is_general', 0);

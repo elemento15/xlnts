@@ -4,6 +4,7 @@
 	<div class="row">
 		<div class="col-sm-12">
 			<uib-tabset type="pills" active="active">
+
 				<uib-tab heading="Ventas Mensuales">
 					<div class="cls-tab-pill-contents">
 						<div class="form-group form-inline">
@@ -14,23 +15,72 @@
 						<button class="btn btn-success" ng-click="runRpt01()">Generar</button>
 					</div>
 				</uib-tab>
+
 				<uib-tab heading="Mejores Clientes">
 					<div class="cls-tab-pill-contents">
-						<div class="checkbox" style="margin-top: 6px;">
-							<label>
-								<input type="checkbox" ng-model="rpt02.show_general" 
-								       ng-true-value="1" ng-false-value="0"> 
-								       <span class="">Incluir "Ventas Rápidas"</span>
-							</label>
+						<div class="row">
+							<div class="col-sm-3">
+								<label>Fechas: </label>
+								<select class="form-control" ng-model="rpt02.type_date">
+									<option value="A">Cualquier fecha</option>
+									<option value="R">Rango de fechas</option>
+								</select>
+							</div>
+							<div class="col-sm-3" ng-show="rpt02.type_date == 'R'">
+								<label>Fecha inicial: </label>
+								<div class="input-group">
+									<input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" datepicker-options="dateOptions"
+									       ng-model="rpt02.date_ini" is-open="rpt02.date_ini_opened" show-button-bar="false">
+									<span class="input-group-btn">
+						            	<button type="button" class="btn btn-default" ng-click="openDatePicker('rpt02-ini')">
+						            		<i class="glyphicon glyphicon-calendar"></i>
+						            	</button>
+						          </span>
+								</div>
+							</div>
+							<div class="col-sm-3" ng-show="rpt02.type_date == 'R'">
+								<label>Fecha final: </label>
+								<div class="input-group">
+									<input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" datepicker-options="dateOptions"
+									       ng-model="rpt02.date_end" is-open="rpt02.date_end_opened" show-button-bar="false">
+									<span class="input-group-btn">
+						            	<button type="button" class="btn btn-default" ng-click="openDatePicker('rpt02-end')">
+						            		<i class="glyphicon glyphicon-calendar"></i>
+						            	</button>
+						          </span>
+								</div>
+							</div>
 						</div>
-						<button class="btn btn-success" ng-click="runRpt02()">Generar</button>
+
+						<div class="row">
+							<div class="col-sm-3">
+								<label>&nbsp;</label>
+								<div class="checkbox" style="margin-top: 6px;">
+									<label>
+										<input type="checkbox" ng-model="rpt02.show_general" 
+										       ng-true-value="1" ng-false-value="0"> 
+										       <span class="">Incluir "Ventas Rápidas"</span>
+									</label>
+								</div>
+							</div>
+						</div>
+
+						<br>
+
+						<div class="row">
+							<div class="col-sm-3">
+								<button class="btn btn-success" ng-click="runRpt02()">Generar</button>
+							</div>
+						</div>
 					</div>
 				</uib-tab>
+
 				<uib-tab heading="Productos mas Vendidos">
 					<div class="cls-tab-pill-contents">
 						&nbsp;
 					</div>
 				</uib-tab>
+
 			</uib-tabset>
 		</div>
 	</div>
