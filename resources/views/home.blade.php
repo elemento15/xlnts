@@ -15,7 +15,9 @@
                 </button>
 
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="#/">ExeLentes</a>
+                <a class="navbar-brand" href="#/">
+                    <img src="images/LogoExe.png" \>
+                </a>
             </div>
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
