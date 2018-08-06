@@ -52,6 +52,7 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="$parent.save()">Guardar</button>
+    <button class="btn btn-primary" type="button" ng-click="$parent.save()" ng-hide="saving.client">Guardar</button>
+    <button class="btn btn-primary" type="button" ng-show="saving.client" disabled="disabled">Guardando</button>
     <button class="btn btn-default" type="button" ng-click="$dismiss()">Cerrar</button>
 </div>

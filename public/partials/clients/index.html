@@ -242,7 +242,8 @@
 			<div class="row">
 				<!-- action buttons for sale screen -->
 				<div class="col-xs-8">
-					<button class="btn btn-primary" ng-click="saveSale()">Guardar</button>
+					<button class="btn btn-primary" ng-click="saveSale()" ng-hide="saving.sale">Guardar</button>
+					<button class="btn btn-primary" ng-show="saving.sale" disabled="disabled">Guardando</button>
 					<button class="btn btn-warning" ng-click="closeSale()">Cerrar</button>
 				</div>
 

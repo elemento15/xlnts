@@ -35,6 +35,7 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="$parent.saveVisit(visit)" ng-hide="visit">Guardar</button>
+    <button class="btn btn-primary" type="button" ng-click="$parent.saveVisit(visit)" ng-hide="(visit || saving.visit)">Guardar</button>
+    <button class="btn btn-primary" type="button" ng-show="saving.visit" disabled="disabled">Guardando</button>
     <button class="btn btn-default" type="button" ng-click="$dismiss()">Cerrar</button>
 </div>

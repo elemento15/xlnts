@@ -24,6 +24,8 @@ function BaseController($scope, $route, $location, $ngConfirm, ModelService, toa
 	$scope.pageInfo = '1/1';
 	$scope.pageDetailInfo = '1/1';
 
+	$scope.savingForm = false;
+
 	// templates / partials
 	$scope.tpls = {
 		new_button       : 'partials/_tpls/new_button.html',
@@ -52,10 +54,13 @@ function BaseController($scope, $route, $location, $ngConfirm, ModelService, toa
 		var data = me.validation();
 		
 		if (data) {
+			$scope.savingForm = true;
+			
 			ModelService.save(data)
 				.success(function(response) {
 					toastr.success('Registro guardado');
 					$location.path(index);
+					$scope.savingForm = false;
 				})
 				.error(function(response) {
 					if (response.errors) {
@@ -65,6 +70,7 @@ function BaseController($scope, $route, $location, $ngConfirm, ModelService, toa
 					} else {
 						toastr.error(response.msg || 'Error en el servidor');
 					}
+					$scope.savingForm = false;
 				});
 		}
 	}

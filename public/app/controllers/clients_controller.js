@@ -63,6 +63,12 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 		price: 0
 	};
 
+	$scope.saving = {
+		visit: false,
+		sale: false,
+		client: false
+	}
+
 	$scope.configs = {
 		iva: 0
 	};
@@ -175,10 +181,14 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 				visit_attributes: $scope.dataAttr
 			};
 
+			$scope.saving.visit = true;
+
 			VisitService.save(data)
 				.success(function(response) {
 					$scope.modalVisit.dismiss();
 					toastr.success('Visita guardada');
+
+					$scope.saving.visit = false;
 
 					// update visits list
 					$scope.readVisits(client_id);
@@ -593,14 +603,19 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 		});
 
 		if (! invalid) {
+			$scope.saving.sale = true;
+
 			SaleService.save($scope.sale)
 				.success(function(response) {
 					toastr.success('Venta Guardada');
 					$scope.closeSale();
 					$scope.readVisits($scope.selectedClient.id);
+
+					$scope.saving.sale = false;
 				})
 				.error(function(response) {
 					toastr.error(response.msg || 'Error en el servidor');
+					$scope.saving.sale = false;
 				});
 		} else {
 			toastr.warning('Hay atributos invalidos en los productos');
@@ -690,6 +705,8 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 		var data = this.validation();
 
 		if (data) {
+			$scope.saving.client = true;
+
 			ClientService.save(data)
 				.success(function(response) {
 					toastr.success('Cliente guardado');
@@ -697,6 +714,7 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 					if (modal) {
 						$scope.modalForm.dismiss();
 					}
+					$scope.saving.client = false;
 				})
 				.error(function(response) {
 					if (response.errors) {
@@ -706,6 +724,7 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 					} else {
 						toastr.error(response.msg || 'Error en el servidor');
 					}
+					$scope.saving.client = false;
 				});
 		}
 	}
