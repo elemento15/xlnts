@@ -23,6 +23,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('roles', 'RolesController');
 
+Route::get('attributes', 'AttributesController@index');
+
 Route::get('products', 'ProductsController@index');
 Route::post('products/search-product', 'ProductsController@searchProduct');
 Route::get('products/{id}/pdf-kardex', 'ProductsController@pdfKardex');
@@ -42,6 +44,8 @@ Route::resource('visits', 'VisitsController');
 Route::resource('sales', 'SalesController');
 Route::get('sales/{id}/pdf', 'SalesController@showPdf');
 
+Route::get('configurations', 'ConfigurationsController@read');
+
 Route::group(['middleware' => ['admin']], function () {
 	Route::resource('users', 'UsersController');
 	Route::post('users/{id}/activate', 'UsersController@activate');
@@ -53,7 +57,9 @@ Route::group(['middleware' => ['admin']], function () {
 	Route::post('groups/{id}/activate', 'GroupsController@activate');
 	Route::post('groups/{id}/deactivate', 'GroupsController@deactivate');
 
-	Route::resource('attributes', 'AttributesController');
+	Route::resource('attributes', 'AttributesController', [
+		'except' => ['index']
+	]);
 	Route::post('attributes/{id}/activate', 'AttributesController@activate');
 	Route::post('attributes/{id}/deactivate', 'AttributesController@deactivate');
 
@@ -72,7 +78,6 @@ Route::group(['middleware' => ['admin']], function () {
 
 	Route::post('movements/{id}/cancel', 'MovementsController@cancel');
 
-	Route::get('configurations', 'ConfigurationsController@read');
 	Route::post('configurations', 'ConfigurationsController@save');
 
 	Route::get('reports/monthly_sales/{year}', 'ReportsController@monthlySales');

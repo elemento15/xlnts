@@ -256,7 +256,7 @@
 						<div class="col-xs-7 text-right">IVA:</div>
 						<div class="col-xs-5 text-right">${{ totals.iva_amount | number: 2 }}</div>
 					</div>
-					<div class="row text-danger">
+					<div class="row text-primary" ng-class="{'cls-negative' : (totals.total < 0)}">
 						<div class="col-xs-7 text-right">Total:</div>
 						<div class="col-xs-5 text-right">${{ totals.total | number: 2 }}</div>
 					</div>
