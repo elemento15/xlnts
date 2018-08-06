@@ -77,7 +77,53 @@
 
 				<uib-tab heading="Productos mas Vendidos">
 					<div class="cls-tab-pill-contents">
-						&nbsp;
+						<div class="row">
+							<div class="col-sm-3">
+								<label>Tipo: </label>
+								<select class="form-control" ng-model="rpt03.type_rpt">
+									<option value="1">Solo productos</option>
+									<option value="2">Solo grupos</option>
+									<option value="3">Productos por grupo</option>
+								</select>
+							</div>
+						</div>
+
+						<br>
+
+						<div class="row">
+							<div class="col-sm-3">
+								<label>Fecha inicial: </label>
+								<div class="input-group">
+									<input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" datepicker-options="dateOptions"
+									       ng-model="rpt03.date_ini" is-open="rpt03.date_ini_opened" show-button-bar="false">
+									<span class="input-group-btn">
+						            	<button type="button" class="btn btn-default" ng-click="openDatePicker('rpt03-ini')">
+						            		<i class="glyphicon glyphicon-calendar"></i>
+						            	</button>
+						          </span>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<label>Fecha final: </label>
+								<div class="input-group">
+									<input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" datepicker-options="dateOptions"
+									       ng-model="rpt03.date_end" is-open="rpt03.date_end_opened" show-button-bar="false">
+									<span class="input-group-btn">
+						            	<button type="button" class="btn btn-default" ng-click="openDatePicker('rpt03-end')">
+						            		<i class="glyphicon glyphicon-calendar"></i>
+						            	</button>
+						          </span>
+								</div>
+							</div>
+						</div>
+
+						<br>
+
+						<div class="row">
+							<div class="col-sm-3">
+								<button class="btn btn-success" ng-click="runRpt03()">Generar</button>
+							</div>
+						</div>
 					</div>
 				</uib-tab>
 

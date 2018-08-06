@@ -77,4 +77,5 @@ Route::group(['middleware' => ['admin']], function () {
 
 	Route::get('reports/monthly_sales/{year}', 'ReportsController@monthlySales');
 	Route::get('reports/clients_sales', 'ReportsController@clientsSales');
+	Route::get('reports/products_sales', 'ReportsController@productsSales');
 });
