@@ -682,6 +682,14 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 		detail.is_devolution = opt;
 		$scope.calculateTotals();
 	}
+
+
+	$scope.$watch('filters.is_general', function (newVal, oldVal) {
+		if (newVal) {
+			$scope.search = '';
+		}
+		$scope.searchData();
+	});
 	
 
 	$scope.$on('$viewContentLoaded', function (view) {
@@ -710,11 +718,15 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 			ClientService.save(data)
 				.success(function(response) {
 					toastr.success('Cliente guardado');
-					$scope.read();
 					if (modal) {
 						$scope.modalForm.dismiss();
 					}
+
 					$scope.saving.client = false;
+
+					// search for the saved client
+					$scope.search = response.name;
+					$scope.searchData();
 				})
 				.error(function(response) {
 					if (response.errors) {
