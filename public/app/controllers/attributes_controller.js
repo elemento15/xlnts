@@ -9,7 +9,7 @@ app.controller('AttributesController', function ($scope, $http, $route, $locatio
 		var data = $scope.data;
 		var invalid = false;
 		
-		if (data.min > data.max) {
+		if (parseFloat(data.min) > parseFloat(data.max)) {
 			invalid = toastr.warning('Valor minimo debe ser menor a máximo', 'Validaciones');
 		}
 
@@ -35,7 +35,8 @@ app.controller('AttributesController', function ($scope, $http, $route, $locatio
 		description: '',
 		min: 0,
 		max: 0,
-		steps: 0
+		steps: 0,
+		display_order: 0
 	};
 
 	$scope.filters = {

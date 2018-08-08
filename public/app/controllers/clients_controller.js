@@ -282,7 +282,6 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 			$scope.selectedClient = client;
 			$scope.readVisits(client.id);
 		}
-
 	}
 
 	$scope.clearSale = function () {
@@ -351,6 +350,15 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 	}
 
 	$scope.setProduct = function (product) {
+		// order attributes by display_order
+		function compare(a, b) {
+			if (a.attribute.display_order < b.attribute.display_order)
+				return -1;
+			if (a.attribute.display_order > b.attribute.display_order)
+				return 1;
+			return 0;
+		}
+
 		$scope.product = {
 			id: product.id,
 			description: product.description,
@@ -359,7 +367,7 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 			price: parseFloat(product.price),
 			type: product.type,
 			is_devolution: 0,
-			attributes: product.attributes
+			attributes: product.attributes.sort(compare)
 		};
 	}
 

@@ -18,37 +18,43 @@ class AttributesTableSeeder extends Seeder
         		'min' => 1,
         		'max' => 3,
         		'steps' => 0.25,
-        		'description' => 'ADICION'
+        		'description' => 'ADICION',
+                'display_order' => 4
         	],[
         		'name' => 'CIL',
         		'min' => -8,
         		'max' => 0,
         		'steps' => 0.25,
-        		'description' => 'CILINDRO'
+        		'description' => 'CILINDRO',
+                'display_order' => 2
         	],[
         		'name' => 'ESF',
         		'min' => -20,
         		'max' => 20,
         		'steps' => 0.25,
-        		'description' => 'ESFERA'
+        		'description' => 'ESFERA',
+                'display_order' => 1
         	],[
         		'name' => 'EJE',
         		'min' => 1,
         		'max' => 180,
         		'steps' => 1,
-        		'description' => 'EJE'
+        		'description' => 'EJE',
+                'display_order' => 3
         	],[
-        		'name' => 'DIP',
+        		'name' => 'DIS',
         		'min' => 20,
         		'max' => 80,
         		'steps' => 1,
-        		'description' => 'DIP'
+        		'description' => 'DISTANCIA',
+                'display_order' => 5
         	],[
         		'name' => 'ALT',
         		'min' => 5,
         		'max' => 40,
         		'steps' => 1,
-        		'description' => 'ALTURA'
+        		'description' => 'ALTURA',
+                'display_order' => 6
         	]
         ];
 

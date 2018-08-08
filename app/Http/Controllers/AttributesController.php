@@ -12,13 +12,13 @@ class AttributesController extends BaseController
     protected $searchFields = ['name','description'];
     protected $indexPaginate = 10;
     protected $indexJoins = [];
-    protected $orderBy = ['field' => 'name', 'type' => 'ASC'];
+    protected $orderBy = ['field' => 'display_order', 'type' => 'ASC'];
     
     // params needer for show
     protected $showJoins = [];
 
     // params needed for store/update
-    protected $saveFields = ['name','min','max','steps','description'];
+    protected $saveFields = ['name','min','max','steps','description','display_order'];
     // - protected $storeFields = [];
     // - protected $updateFields = [];
     protected $defaultNulls = [];

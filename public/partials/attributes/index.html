@@ -26,6 +26,7 @@
 						<th class="text-center">Mínimo</th>
 						<th class="text-center">Máximo</th>
 						<th class="text-center">Pasos</th>
+						<th class="text-center">Orden</th>
 						<th width="100" class="text-center">Estado</th>
 					</tr>
 				</thead>
@@ -40,6 +41,7 @@
 						<td class="text-right">{{ rec.min }}</td>
 						<td class="text-right">{{ rec.max }}</td>
 						<td class="text-right">{{ rec.steps }}</td>
+						<td class="text-right">{{ rec.display_order }}</td>
 						<!-- change status component -->
 						<td align="center" ng-include="tpls.change_status"></td>
 					</tr>

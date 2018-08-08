@@ -10,10 +10,16 @@
 						<input type="text" class="form-control" ng-model="data.name" autocomplete="off" maxlength="5">
 					</div>
 				</div>
-				<div class="col-sm-8">
+				<div class="col-sm-5">
 					<div class="form-group">
 						<label>Descripción:</label>
 						<input type="text" class="form-control" ng-model="data.description" autocomplete="off" maxlength="50">
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="form-group">
+						<label>Orden:</label>
+						<input type="number" string-to-number class="form-control text-right" ng-model="data.display_order" autocomplete="off">
 					</div>
 				</div>
 			</div>

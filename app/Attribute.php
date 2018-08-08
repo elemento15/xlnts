@@ -12,6 +12,6 @@ class Attribute extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'min', 'max', 'steps', 'description'
+        'name', 'min', 'max', 'steps', 'description', 'display_order'
     ];
 }
