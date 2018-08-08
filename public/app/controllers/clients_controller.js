@@ -79,6 +79,8 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 		limit: 5
 	};
 
+	$scope.lastVisitAttr = false;
+
 
 	$scope.clearModel = function () {
 		$scope.data = {
@@ -691,12 +693,41 @@ app.controller('ClientsController', function ($scope, $http, $route, $location, 
 		$scope.calculateTotals();
 	}
 
+	$scope.getLastVisitVal = function (attr_id, type) {
+		var value = 0;
+		var data = $scope.lastVisitAttr || false;
+		
+		if (data) {
+			data.forEach(function (item) {
+				if (item.attribute_id == attr_id) {
+					value = (type == 'L') ? item.left_value : item.right_value;
+				}
+			});
+		}
+
+		return value;
+	}
+
 
 	$scope.$watch('filters.is_general', function (newVal, oldVal) {
 		if (newVal) {
 			$scope.search = '';
 		}
 		$scope.searchData();
+	});
+
+	$scope.$watch('screen', function(newVal, oldVal) {
+		if (newVal == 'SALES') {
+			var data = { id: $scope.selectedClient.id };
+
+			ClientService.lastVisit(data)
+				.success(function(response) {
+					$scope.lastVisitAttr = response.visit_attributes || null;
+				})
+				.error(function(response) {
+					toastr.error(response.msg || 'Error en el servidor');
+				});
+		}
 	});
 	
 

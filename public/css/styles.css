@@ -260,3 +260,9 @@ input.cls-error {
 .cls-bold {
 	font-weight: bold;
 }
+
+.cls-receipt-title {
+	text-align: center;
+	border: 1px solid #aaa;
+	border-radius: 4px;
+}
