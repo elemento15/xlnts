@@ -274,15 +274,15 @@
 						<thead>
 							<tr>
 								<th class="cls-small">Atributo</th>
-								<th class="cls-small text-center">Ojo IZQ.</th>
 								<th class="cls-small text-center">Ojo DER.</th>
+								<th class="cls-small text-center">Ojo IZQ.</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr ng-repeat="(key, item) in attributesList">
 								<td>{{ item.name }}</td>
-								<td class="text-right">{{ getLastVisitVal(item.id, 'L') | number: 2 }}</td>
 								<td class="text-right">{{ getLastVisitVal(item.id, 'R') | number: 2 }}</td>
+								<td class="text-right">{{ getLastVisitVal(item.id, 'L') | number: 2 }}</td>
 							</tr>
 						</tbody>	
 					</table>

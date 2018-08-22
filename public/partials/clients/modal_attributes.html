@@ -14,8 +14,8 @@
     <div class="form-horizontal">
         <div class="row cls-small text-info" style="margin-bottom: 5px;">
             <div class="col-sm-2 text-right"><b>Atributo</b></div>
-            <div class="col-sm-3 text-center"><b>OJO IZQ.</b></div>
             <div class="col-sm-3 text-center"><b>OJO DER.</b></div>
+            <div class="col-sm-3 text-center"><b>OJO IZQ.</b></div>
             <div class="col-sm-4"><b>Min/Max | Pasos</b></div>
         </div>
 
@@ -23,12 +23,12 @@
             <div ng-show="attr.checked">
                 <label class="col-sm-2 control-label">{{ attr.attribute.name }}:</label>
                 <div class="col-sm-3">
-                    <input type="number" class="form-control text-right" ng-model="attr.left_value" 
-                           ng-class="{'cls-error' : attr.left_invalid}" ng-blur="$parent.validateProductAttributes(product.attributes)">
+                    <input type="number" class="form-control text-right" ng-model="attr.right_value" 
+                           ng-class="{'cls-error' : attr.right_invalid}" ng-blur="$parent.validateProductAttributes(product.attributes)">
                 </div>
                 <div class="col-sm-3">
-                    <input type="number" class="form-control text-right" ng-model="attr.right_value"
-                           ng-class="{'cls-error' : attr.right_invalid}" ng-blur="$parent.validateProductAttributes(product.attributes)">
+                    <input type="number" class="form-control text-right" ng-model="attr.left_value"
+                           ng-class="{'cls-error' : attr.left_invalid}" ng-blur="$parent.validateProductAttributes(product.attributes)">
                 </div>
                 <div class="col-sm-4">
                 <span class="cls-small">{{ attr.attribute.min }} / {{ attr.attribute.max}} | {{ attr.attribute.steps }}</span>
