@@ -58,7 +58,15 @@
 			</table>
 
 			<!-- paginator -->
-			<div class="row" ng-include="tpls.paginator"></div>
+			<!--<div class="row" ng-include="tpls.paginator"></div>-->
+			<div class="row">
+				<div class="col-sm-4">
+					<a class="btn btn-default btn-sm" href="#/sales">Listado de  Ventas</a>
+				</div>
+				<div class="col-sm-8">
+					<div class="row" ng-include="tpls.paginator"></div>
+				</div>
+			</div>
 		</div>
 
 		<!-- client's visits -->

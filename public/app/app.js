@@ -92,6 +92,10 @@ app.config(function ($routeProvider, $provide, toastrConfig) {
 				controller: 'MovementsController',
 				templateUrl: '/partials/movements/edit.html'
 			})
+		.when('/sales',{
+				controller: 'SalesController',
+				templateUrl: '/partials/sales/index.html'
+			})
 		.when('/configuration',{
 				controller: 'ConfigurationController',
 				templateUrl: '/partials/configuration/index.html'
