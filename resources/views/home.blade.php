@@ -3,7 +3,7 @@
 @section('content')
 <div id="app">
     <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
+        <div class="container-fluid {{ (config('app.testing')) ? 'bg-warning' : '' }}">
             <div class="navbar-header">
 
                 <!-- Collapsed Hamburger -->
