@@ -35,6 +35,8 @@ app.controller('MovementsController', function ($scope, $http, $route, $location
 		active: '1'
 	};
 
+	$scope.isAdmin = (window.mainApp.roleCode == 'ADM');
+
 	// search product
 	$scope.product = {
 		id: 0,

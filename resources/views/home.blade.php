@@ -27,6 +27,8 @@
                     <li><a href="#/clients">Clientes</a></li>
                     <li><a href="#/products">Productos</a></li>
                     <li><a href="#/movements">Movimientos</a></li>
+                    
+                    @if (Session::get("userRoleCode") == 'ADM')
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             Catálogos <span class="caret"></span>
@@ -41,6 +43,7 @@
                         </ul>
                     </li>
                     <li><a href="#/reports">Reportes</a></li>
+                    @endif
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -57,7 +60,9 @@
 
                             <ul class="dropdown-menu" role="menu">
                                 <li>
-                                    <a href="#/configuration">Configuración</a>
+                                    @if (Session::get("userRoleCode") == 'ADM')
+                                        <a href="#/configuration">Configuración</a>
+                                    @endif
                                     <a href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">

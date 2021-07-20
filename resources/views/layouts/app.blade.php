@@ -60,5 +60,12 @@
     <script src="/app/controllers/sales_controller.js"></script>
     <script src="/app/controllers/clients_controller.js"></script>
     <script src="/app/controllers/reports_controller.js"></script>
+
+    <script type="text/javascript">
+        window.mainApp = {
+            roleCode: '{{ Session::get("userRoleCode") }}',
+            roleName: '{{ Session::get("userRoleName") }}'
+        };
+    </script>
 </body>
 </html>

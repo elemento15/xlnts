@@ -6,7 +6,9 @@
 		<div class="col-sm-7">
 			<div class="row cls-toolbar">
 				<!-- new button -->
-				<div class="col-sm-1" ng-include="tpls.new_button_sm"></div>
+				<div class="col-sm-1">
+					<div ng-include="tpls.new_button_sm" ng-show="isAdmin"></div>
+				</div>
 
 				<!-- group filter -->
 				<div class="col-sm-4">
@@ -44,11 +46,11 @@
 					<tr data-ng-repeat="(key, rec) in list" ng-dblclick="view(rec.id)">
 						<!-- actions buttons -->
 						<td>
-							<div class="cls-actions">
-								<button class="btn btn-info btn-xs" ng-click="view(rec.id)">
+							<div class="cls-actions text-center">
+								<button class="btn btn-info btn-xs" ng-click="view(rec.id)" ng-show="isAdmin">
 									<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
 								</button>
-								<button class="btn btn-danger btn-xs" ng-click="delete(rec.id)">
+								<button class="btn btn-danger btn-xs" ng-click="delete(rec.id)" ng-show="isAdmin">
 									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 								</button>
 								<a class="btn btn-default btn-xs" href="products/{{ rec.id }}/pdf-kardex" target="blank">

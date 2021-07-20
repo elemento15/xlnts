@@ -65,6 +65,14 @@ class LoginController extends Controller
 
             // Make sure the user is active
             if ($user->active && $user->role_id && $this->attemptLogin($request)) {
+                
+                // set session variables
+                session([
+                    'userID' => $user->id,
+                    'userRoleCode' => $user->role->code,
+                    'userRoleName' => $user->role->name
+                ]);
+
                 // Send the normal successful login response
                 return $this->sendLoginResponse($request);
             } else {

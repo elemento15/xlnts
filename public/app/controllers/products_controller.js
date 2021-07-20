@@ -26,6 +26,8 @@ app.controller('ProductsController', function ($scope, $http, $route, $location,
 		return (invalid) ? false : data;
 	}
 
+	$scope.isAdmin = (window.mainApp.roleCode == 'ADM');
+
 	$scope.data = {};
 
 	$scope.filters = {
@@ -91,23 +93,26 @@ app.controller('ProductsController', function ($scope, $http, $route, $location,
 
 	$scope.showAttributes = function (record) {
 		var attrProd = [];
-		$scope.data = $scope.getRecord(record.id);
+		
+		if ($scope.isAdmin) {
+			$scope.data = $scope.getRecord(record.id);
 
-		// pass all the attributes, setting those related to product that are checked
-		$scope.attributesList.forEach(function (item) {
-			attrProd.push({
-				attribute_id: item.id, 
-				name: item.name,
-				min: item.min,
-				max: item.max,
-				steps: item.steps,
-				description: item.description,
-				checked: $scope.getCheckedAttr(item.id, $scope.data.attributes)
+			// pass all the attributes, setting those related to product that are checked
+			$scope.attributesList.forEach(function (item) {
+				attrProd.push({
+					attribute_id: item.id, 
+					name: item.name,
+					min: item.min,
+					max: item.max,
+					steps: item.steps,
+					description: item.description,
+					checked: $scope.getCheckedAttr(item.id, $scope.data.attributes)
+				});
 			});
-		});
 
-		$scope.attributesProducts = attrProd;
-		$scope.showView = 'A';
+			$scope.attributesProducts = attrProd;
+			$scope.showView = 'A';
+		}
 	}
 
 	$scope.changeAttrSelection = function (attribute) {
@@ -202,7 +207,9 @@ app.controller('ProductsController', function ($scope, $http, $route, $location,
 	}
 
 	$scope.view = function (id) {
-		$scope.data = $scope.getRecord(id);
-		$scope.showView = 'F'; // form
+		if ($scope.isAdmin) {
+			$scope.data = $scope.getRecord(id);
+			$scope.showView = 'F'; // form
+		}
 	}
 });

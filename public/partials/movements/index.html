@@ -39,7 +39,7 @@
 									<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
 								</button>
 								<button class="btn btn-danger btn-xs" ng-click="cancel(rec.id)" 
-								        ng-hide="rec.movement_concept.is_auto">
+								        ng-hide="rec.movement_concept.is_auto || !isAdmin">
 									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 								</button>
 							</div>
