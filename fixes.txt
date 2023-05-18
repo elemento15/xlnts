@@ -1,0 +1,8 @@
+Fixing error in TCPDF
+=====================
+path:    vendor/tecnickcom/tcpdf/include
+file:    tcpdf_fonts.php
+method:  public static function unichr()
+description: 
+add [ if ($c = intval($c)) { ] before [ if (!$unicode) {... ]
+don't forget the closing bracket "}"
